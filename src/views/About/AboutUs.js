@@ -15,7 +15,7 @@ import TeamSection from "./Sections/TeamSection.js";
 import WorkSection from "./Sections/WorkSection.js";
 const useStyles = makeStyles(styles);
 
-export default function LandingPage(props) {
+export default function Aboutus(props) {
   const classes = useStyles();
   const { ...rest } = props;
   return (
