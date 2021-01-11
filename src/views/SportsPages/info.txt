@@ -1,0 +1,4 @@
+sportsType :  0 = American Football
+sportsType :  1 = Basketball
+sportsType :  2 = IceHockey
+sportsType :  3 = Football (Soccer)

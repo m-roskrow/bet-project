@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 
 // @material-ui/icons
 import Question from "@material-ui/icons/Help";
-import List from "@material-ui/icons/List";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.js";

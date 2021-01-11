@@ -18,33 +18,38 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
   
-  export default function SimpleSelect(props) {
+  export default function OddsTypeSelect(props) {
     const classes = useStyles();
-    const [value, setValue] = React.useState("CO");
-  
+    const [value, setValue] = React.useState("h2h");
+    const oddsCode = React.useState(props.oddsCode);
+    var menuOptions = [{value: "h2h"}, {value: "outrights"}, {value: "totals"}, {value: "spreads"}]
+    if (oddsCode === 0) {
+        menuOptions = [{value: "h2h"}, {value: "outrights"}, {value: "totals"}, {value: "spreads"}]
+        console.log("Hi")
+    }
     const handleChange = (event) => {
-      setValue(event.target.value);
-      props.onChange(event.target.value);
+        setValue(event.target.value);
+        props.onChange(event.target.value);
     };
     return (
         <div>
+          
           <GridItem xs={3} sm={3} md={3} lg={3} xl ={3}>
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label" classes={{root: classes.whiteColor}} >State</InputLabel>
+            <InputLabel id="demo-simple-select-label" classes={{root: classes.whiteColor}} >Odds Type</InputLabel>
             <Select
               classes={{root: classes.whiteColor, icon: classes.whiteColor}}
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={value}
               onChange={handleChange}
-              
+              options = {menuOptions}
             >
-              <MenuItem value={"CO"}>CO</MenuItem>
-              <MenuItem value={"IA"}>IA</MenuItem>
-              <MenuItem value={"IL"}>IL</MenuItem>
+              {menuOptions.map((option) => (<MenuItem value = {option.value} key={option.value}>{option.value}</MenuItem>))}
             </Select>
           </FormControl>
           </GridItem>
+          
         </div>
         );
 }

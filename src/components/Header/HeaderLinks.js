@@ -43,8 +43,8 @@ export default function HeaderLinks(props) {
            <Link to= "/nhl-odds" className={classes.dropdownLink}>
              NHL 
              </Link>,
-             <Link to= "/ncaa-odds" className={classes.dropdownLink}>
-             NCAA
+             <Link to= "/ncaab-odds" className={classes.dropdownLink}>
+             NCAAB
              </Link>
           ]}
         />
@@ -59,7 +59,7 @@ export default function HeaderLinks(props) {
           <Help className={classes.icons} /> Help
         </Button>
       </ListItem>
-      <ListItem className={classes.listItem}>
+      {/*<ListItem className={classes.listItem}>
         <Button
           onClick
           color="transparent"
@@ -68,7 +68,7 @@ export default function HeaderLinks(props) {
         >
           <Refresh className={classes.icons} /> Refresh Odds
         </Button>
-      </ListItem>
+        </ListItem>*/}
       <ListItem className={classes.listItem}>
         {/*<Tooltip title="Delete">
           <IconButton aria-label="Delete">

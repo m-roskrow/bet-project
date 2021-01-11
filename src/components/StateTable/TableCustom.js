@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import {v4 as uuidv4} from 'uuid';
 
 const useRowStyles = makeStyles({
   root: {
@@ -23,10 +24,10 @@ const useRowStyles = makeStyles({
   },
 });
 
-function createData(homeTeam, awayTeam, date, numSites, sites) {
+function createData(team1, team2, date, numSites, sites) {
   return {
-    homeTeam,
-    awayTeam,
+    team1,
+    team2,
     date,
     numSites,
     sites
@@ -41,15 +42,15 @@ function Row(props) {
   return (
     <React.Fragment>
       <TableRow className={classes.root}>
-        <TableCell>
+        <TableCell >
           <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.homeTeam}
+          {row.team1}
         </TableCell>
-        <TableCell align="left">{row.awayTeam}</TableCell>
+        <TableCell align="left">{row.team2}</TableCell>
         <TableCell align="right">{row.date}</TableCell>
         <TableCell align="right">{row.numSites}</TableCell>
       </TableRow>
@@ -64,7 +65,8 @@ function Row(props) {
                 <TableHead>
                   <TableRow>
                     <TableCell>Site</TableCell>
-                    <TableCell align="right">Odds</TableCell>
+                    <TableCell align="right">{row.team1} Odds</TableCell>
+                    <TableCell align="right">{row.team2} Odds</TableCell>
                     <TableCell align="right">Type</TableCell>
                   </TableRow>
                 </TableHead>
@@ -74,7 +76,8 @@ function Row(props) {
                       <TableCell component="th" scope="row">
                         {sitesRow.site}
                       </TableCell>
-                      <TableCell align="right">{sitesRow.odds}</TableCell>
+                      <TableCell align="right">{sitesRow.odds1}</TableCell>
+                      <TableCell align="right">{sitesRow.odds2}</TableCell>
                       <TableCell align="right">{sitesRow.type}</TableCell>
                       
                     </TableRow>
@@ -91,13 +94,14 @@ function Row(props) {
 
 Row.propTypes = {
   row: PropTypes.shape({
-    homeTeam: PropTypes.string.isRequired,
-    awayTeam: PropTypes.string.isRequired,
+    team1: PropTypes.string.isRequired,
+    team2: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     sites: PropTypes.arrayOf(
       PropTypes.shape({
         site: PropTypes.string.isRequired,
-        odds: PropTypes.string.isRequired,
+        odds1: PropTypes.string.isRequired,
+        odds2: PropTypes.string.isRequired,
         type: PropTypes.string.isRequired,
       }),
     ).isRequired,
@@ -107,24 +111,85 @@ Row.propTypes = {
 
 
 /* EXPANDED ARROWS NOT WORKING, NEED TO UPDATE HOME TEAMS HANDLING AND NEED TO ADD OTHER ODD TYPE SUPPORT*/
-function updateRows(data) {
+/* TODO - add different odd types support
+        - add proper home team support 
+        - add proper date representation 
+        - add number of odd types column
+        - add odd sorting functionality for both ascending and descending / highlight best odds for each team*/
+function updateRows(data, market) {
   
   const numGames = data[0].data.length;
-  console.log(numGames);
-  const output = new Array;
+  const output = [];
   for (var i = 0 ; i < numGames; i++){
     const homeTeam = data[0].data[i].home_team;
-    const awayTeam = data[0].data[i].teams[1];
-    const date = data[0].data[i].commence_time;
-    const numSites = data[0].data[i].sites.length;
-    const sitesArray = new Array;
+    var team1 = data[0].data[i].teams[0];
+    var team2 = data[0].data[i].teams[1];
+    if (team1 === homeTeam) team1 += " (H)";
+    if (team2 === homeTeam) team2 += " (H)";
+    const tempDate = data[0].data[i].commence_time;
+    const date = tempDate.substring(0,10);
+    const numSites = data[0].data[i].sites_count;
+    
+    const sitesArray = [];
     for (var j = 0; j < numSites; j++){
       const siteName = data[0].data[i].sites[j].site_nice;
-      const odds = data[0].data[i].sites[j].odds.h2h[0] + "-" + data[0].data[i].sites[j].odds.h2h[1]
-      const oddsType = "h2h"
-      sitesArray.push([siteName, odds, oddsType])
+      const oddsType = market;
+      var oddsT1;
+      var oddsT2;
+      /* populate inner odds table - catching errors on odd fetching in case not available for that sport type*/
+      switch(oddsType) {
+        case ("h2h"):
+          try {
+            oddsT1 = data[0].data[i].sites[j].odds.h2h[0].toString();
+            oddsT2 = data[0].data[i].sites[j].odds.h2h[1].toString();
+          }
+          catch(err) {
+            oddsT1 = "unavailable";
+            oddsT2 = "unavailable"
+          }
+          break;
+        case ("totals"):
+          try {
+            oddsT1 = data[0].data[i].sites[j].odds.totals.position[0] + " " + data[0].data[i].sites[j].odds.totals.points[0].toString() + ", " +  data[0].data[i].sites[j].odds.totals.odds[0].toString();
+            oddsT2 = data[0].data[i].sites[j].odds.totals.position[1] + " " + data[0].data[i].sites[j].odds.totals.points[1].toString() + ", " +  data[0].data[i].sites[j].odds.totals.odds[1].toString();
+          }
+          catch(err) {
+            console.log(err);
+            oddsT1 = "unavailable";
+            oddsT2 = "unavailable"
+          }
+          break;
+        case ("outrights"):
+          try {
+            oddsT1 = data[0].data[i].sites[j].odds.outrights[0].toString();
+            oddsT2 = data[0].data[i].sites[j].odds.outrights[1].toString();
+          }
+          catch(err) {
+            oddsT1 = "unavailable";
+            oddsT2 = "unavailable"
+          }
+          break;
+        case ("spreads"):
+          try {
+            oddsT1 = data[0].data[i].sites[j].odds.spreads.points[0].toString() + ", " + data[0].data[i].sites[j].odds.spreads.odds[0].toString();
+            oddsT2 = data[0].data[i].sites[j].odds.spreads.points[1].toString() + ", " + data[0].data[i].sites[j].odds.spreads.odds[1].toString();
+          }
+          catch(err) {
+            oddsT1 = "unavailable";
+            oddsT2 = "unavailable"
+          }
+          break;
+        default:
+          oddsT1 = "error in odds type";
+            oddsT2 = "error in odds type";
+      }
+      
+      
+      const tempTime = data[0].data[i].sites[j].last_update;
+      const updateTime = tempTime.substring(0, 10) + " " + tempTime.substring(11,19) + " GMT"
+      sitesArray.push({site: siteName, odds1: oddsT1, odds2: oddsT2, type: oddsType});
     }
-    output.push(createData (homeTeam, awayTeam, date, numSites, sitesArray))
+    output.push(createData (team1, team2, date, numSites, sitesArray))
   }
   
   return output;
@@ -132,23 +197,28 @@ function updateRows(data) {
 
 export default function TableCustom(props) {
   const data = React.useState(props.data);
-  const rows = updateRows(data);
+  const [market, setMarket] = React.useState(props.market);
+  React.useEffect(() => 
+      setMarket(props.market),
+      [props.market]
+    );
+  const rows = updateRows(data, market);
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell align="left">Home Team</TableCell>
-            <TableCell align="left">Away Team</TableCell>
-            <TableCell align="right">Date</TableCell>
+            <TableCell align="left">Team 1</TableCell>
+            <TableCell align="left">Team 2</TableCell>
+            <TableCell align="right">Date of Fixture</TableCell>
             <TableCell align="right">Number of Sites</TableCell>
             
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <Row key={row.homeTeam} row={row} />
+            <Row key={uuidv4()} row={row} />
             
           ))}
         </TableBody>

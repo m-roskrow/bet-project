@@ -21,8 +21,13 @@ export default function ProductSection() {
     <div className={classes.section}>
       <GridContainer justify="center">
         <GridItem xs={12} sm={12} md={8}>
-          <h2 className={classes.title}>Let{"'"}s talk product</h2>
+        <br />
+        <br />
+          <h2 className={classes.title}>Comparing Odds</h2>
           <h5 className={classes.description}>
+            We're an independent start-up, with no allegiances to any of the 
+            betting companies, therefore you can trust us to deliver un-biased
+            news and odds comparisons.
             This is the paragraph where you can write more details about your
             product. Keep you user engaged by providing meaningful information.
             Remember that by this time, the user is curious, otherwise he wouldn

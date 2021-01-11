@@ -5,6 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import GridItem from "components/Grid/GridItem.js";
+
 const useStyles = makeStyles((theme) => ({
     formControl: {
       margin: theme.spacing(1),
@@ -18,9 +19,9 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
   
-  export default function SimpleSelect(props) {
+  export default function OddsDisplayTypeSelect(props) {
     const classes = useStyles();
-    const [value, setValue] = React.useState("CO");
+    const [value, setValue] = React.useState("american");
   
     const handleChange = (event) => {
       setValue(event.target.value);
@@ -30,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
         <div>
           <GridItem xs={3} sm={3} md={3} lg={3} xl ={3}>
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label" classes={{root: classes.whiteColor}} >State</InputLabel>
+            <InputLabel id="demo-simple-select-label" classes={{root: classes.whiteColor}} >Display Type</InputLabel>
             <Select
               classes={{root: classes.whiteColor, icon: classes.whiteColor}}
               labelId="demo-simple-select-label"
@@ -39,9 +40,8 @@ const useStyles = makeStyles((theme) => ({
               onChange={handleChange}
               
             >
-              <MenuItem value={"CO"}>CO</MenuItem>
-              <MenuItem value={"IA"}>IA</MenuItem>
-              <MenuItem value={"IL"}>IL</MenuItem>
+              <MenuItem value={"american"}>American</MenuItem>
+              <MenuItem value={"decimal"}>Decimal</MenuItem>
             </Select>
           </FormControl>
           </GridItem>
