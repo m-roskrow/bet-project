@@ -24,12 +24,13 @@ const useRowStyles = makeStyles({
   },
 });
 
-function createData(team1, team2, date, numSites, sites) {
+function createData(team1, bestT1, team2, bestT2, date, sites) {
   return {
     team1,
+    bestT1,
     team2,
+    bestT2,
     date,
-    numSites,
     sites
   };
 }
@@ -47,12 +48,11 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
-          {row.team1}
-        </TableCell>
+        <TableCell component="th" scope="row">{row.team1}</TableCell>
+        <TableCell align="left">{row.bestT1}</TableCell>
         <TableCell align="left">{row.team2}</TableCell>
+        <TableCell align="left">{row.bestT2}</TableCell>
         <TableCell align="right">{row.date}</TableCell>
-        <TableCell align="right">{row.numSites}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -95,7 +95,9 @@ function Row(props) {
 Row.propTypes = {
   row: PropTypes.shape({
     team1: PropTypes.string.isRequired,
+    bestT1: PropTypes.number.isRequired,
     team2: PropTypes.string.isRequired,
+    bestT2: PropTypes.number.isRequired,
     date: PropTypes.string.isRequired,
     sites: PropTypes.arrayOf(
       PropTypes.shape({
@@ -105,7 +107,6 @@ Row.propTypes = {
         type: PropTypes.string.isRequired,
       }),
     ).isRequired,
-    numSites: PropTypes.number.isRequired,
   }).isRequired,
 };
 
@@ -120,6 +121,8 @@ function updateRows(data, market) {
   
   const numGames = data[0].data.length;
   const output = [];
+  const bestSitesArray1 = [];
+  const bestSitesArray2 = [];
   for (var i = 0 ; i < numGames; i++){
     const homeTeam = data[0].data[i].home_team;
     var team1 = data[0].data[i].teams[0];
@@ -129,19 +132,26 @@ function updateRows(data, market) {
     const tempDate = data[0].data[i].commence_time;
     const date = tempDate.substring(0,10);
     const numSites = data[0].data[i].sites_count;
-    
     const sitesArray = [];
+    var bestT1 = -10000;
+    var bestT2 = -10000;
+    var bestIndex1 = [];
+    var bestIndex2 = [];
     for (var j = 0; j < numSites; j++){
       const siteName = data[0].data[i].sites[j].site_nice;
       const oddsType = market;
       var oddsT1;
       var oddsT2;
+      var tempT1;
+      var tempT2;
       /* populate inner odds table - catching errors on odd fetching in case not available for that sport type*/
       switch(oddsType) {
         case ("h2h"):
           try {
             oddsT1 = data[0].data[i].sites[j].odds.h2h[0].toString();
             oddsT2 = data[0].data[i].sites[j].odds.h2h[1].toString();
+            tempT1 = data[0].data[i].sites[j].odds.h2h[0]
+            tempT2 = data[0].data[i].sites[j].odds.h2h[1]
           }
           catch(err) {
             oddsT1 = "unavailable";
@@ -181,17 +191,34 @@ function updateRows(data, market) {
           break;
         default:
           oddsT1 = "error in odds type";
-            oddsT2 = "error in odds type";
+          oddsT2 = "error in odds type";
       }
-      
+      /* calculating best odds */
+      if (tempT1 > bestT1){
+        bestIndex1 = [j];
+        bestT1 = tempT1;}
+      else if (tempT1 === bestT1){
+        bestIndex1.push(j);}
+      if (tempT2 > bestT2){
+        bestIndex2 = [j];
+        bestT2 = tempT2;}
+      else if (tempT2 === bestT2){
+        bestIndex2.push(j);}
       
       const tempTime = data[0].data[i].sites[j].last_update;
       const updateTime = tempTime.substring(0, 10) + " " + tempTime.substring(11,19) + " GMT"
       sitesArray.push({site: siteName, odds1: oddsT1, odds2: oddsT2, type: oddsType});
+      
     }
-    output.push(createData (team1, team2, date, numSites, sitesArray))
+    const tempArray1 = [];
+    for (var z = 0; z < bestIndex1.length; z++){
+      tempArray1.push(data[0].data[i].sites[bestIndex1[z]].site_nice);
+    }
+    /* TODO USE THIS ARRAY TO SHOW SITES WITH BEST ODDS FOR BOTH TEAMS - MAYBE SHOW SITE NAME IF ONLY 1 AND EXPAND OPTION FOR MORE THAN 1???*/
+    bestSitesArray1.push(tempArray1);
+    console.log(bestSitesArray1);
+    output.push(createData (team1, bestT1, team2, bestT2, date, sitesArray))
   }
-  
   return output;
 }
 
@@ -210,10 +237,10 @@ export default function TableCustom(props) {
           <TableRow>
             <TableCell />
             <TableCell align="left">Team 1</TableCell>
+            <TableCell align="left">T1 Best Odds</TableCell>
             <TableCell align="left">Team 2</TableCell>
-            <TableCell align="right">Date of Fixture</TableCell>
-            <TableCell align="right">Number of Sites</TableCell>
-            
+            <TableCell align="left">T2 Best Odds</TableCell>
+            <TableCell align="right">Date of Fixture</TableCell>            
           </TableRow>
         </TableHead>
         <TableBody>
