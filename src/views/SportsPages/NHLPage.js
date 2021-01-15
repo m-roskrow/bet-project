@@ -42,7 +42,7 @@ export default function NHLPage(props) {
       <Header
         absolute
         color="transparent"
-        brand="Odds Comparison"
+        brand="Money Lines Checker"
         rightLinks={<HeaderLinks />}
         {...rest}
       />

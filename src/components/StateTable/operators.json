@@ -1,0 +1,106 @@
+{
+    "operators": {
+        "betonlineag": {
+            "include": false,
+            "states": [],
+            "link": "examplelink",
+            "logoLocation": "assets/imgs/brands/bet-online"
+        },
+        "betfair": {
+            "include": false,
+            "states": [],
+            "link": "examplelink",
+            "logoLocation": "assets/imgs/brands/betfair"
+        },
+        "betmgm": {
+            "include": true,
+            "states": [],
+            "link": "examplelink",
+            "logoLocation": "assets/imgs/brands/bet-MGM"
+        },
+        "betrivers": {
+            "include": true,
+            "states": [],
+            "link": "examplelink",
+            "logoLocation": "assets/imgs/brands/bet-rivers"
+        },
+        "bookmaker": {
+            "include": false,
+            "states": [],
+            "link": "examplelink",
+            "logoLocation": "assets/imgs/brands/bookmaker-eu"
+        },
+        "bovada": {
+            "include": false,
+            "states": [],
+            "link": "examplelink",
+            "logoLocation": "assets/imgs/brands/bovada"
+        },
+        "caesars": {
+            "include": true,
+            "states": ["NJ"],
+            "link": "examplelink",
+            "logoLocation": "assets/imgs/brands/caesars"
+        },
+        "draftkings": {
+            "include": true,
+            "states": [],
+            "link": "examplelink",
+            "logoLocation": "assets/imgs/brands/draft-kings"
+        },
+        "fanduel": {
+            "include": true,
+            "states": ["NJ","PA","CO","IL","IA","WV","IN","TN"],
+            "link": "examplelink",
+            "logoLocation": "assets/imgs/brands/fan-duel"
+        },
+        "gtbets": {
+            "include": false,
+            "states": [],
+            "link": "examplelink",
+            "logoLocation": "assets/imgs/brands/GT-bets"
+        },
+        "intertops": {
+            "include": false,
+            "states": [],
+            "link": "examplelink",
+            "logoLocation": "assets/imgs/brands/intertops"
+        },
+        "lowvig": {
+            "include": false,
+            "states": [],
+            "link": "examplelink",
+            "logoLocation": "assets/imgs/brands/low-wig"
+        },
+        "mybookieag": {
+            "include": false,
+            "states": [],
+            "link": "examplelink",
+            "logoLocation": "assets/imgs/brands/my-bookie"
+        },
+        "pointsbetus": {
+            "include": true,
+            "states": [],
+            "link": "examplelink",
+            "logoLocation": "assets/imgs/brands/points-bet"
+        },
+        "sugarhouse": {
+            "include": true,
+            "states": [],
+            "link": "examplelink",
+            "logoLocation": "assets/imgs/brands/sugar-house"
+        },
+        "unibet": {
+            "include": true,
+            "states": [],
+            "link": "examplelink",
+            "logoLocation": "assets/imgs/brands/unibet"
+        },
+        "williamhill_us": {
+            "include": true,
+            "states": [],
+            "link": "examplelink",
+            "logoLocation": "assets/imgs/brands/william-hill"
+        }
+    }
+}

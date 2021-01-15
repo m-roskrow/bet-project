@@ -26,7 +26,7 @@ export default function Components(props) {
   return (
     <div>
       <Header
-        brand="Odds Comparison"
+        brand="Money Lines Checker"
         rightLinks={<HeaderLinks />}
         fixed
         color="transparent"
@@ -41,7 +41,7 @@ export default function Components(props) {
           <GridContainer>
             <GridItem>
               <div className={classes.brand}>
-                <h1 className={classes.title}>Odds Comparison.</h1>
+                <h1 className={classes.title}>Money Lines Checker</h1>
                 <h3 className={classes.subtitle}>
                   Ensuring you get the best odds available on your sports betting
                 </h3>

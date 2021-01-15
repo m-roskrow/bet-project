@@ -25,7 +25,7 @@ const useStyles = makeStyles(styles);
 
 export default function NFLPage(props) {
   const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
-  const [currentState, setCurrentState] = React.useState("CO");
+  const [currentState, setCurrentState] = React.useState("NJ");
   const [oddsType, setOddsType] = React.useState("h2h");
   const [oddsDisplayType, setOddsDisplayType] = React.useState("american");
   setTimeout(function() {
@@ -42,7 +42,7 @@ export default function NFLPage(props) {
       <Header
         absolute
         color="transparent"
-        brand="Odds Comparison"
+        brand="Money Lines Checker"
         rightLinks={<HeaderLinks />}
         {...rest}
       />
@@ -81,7 +81,8 @@ export default function NFLPage(props) {
                     sport={"americanfootball_nfl"}
                     market={oddsType}
                     oddsFormat={oddsDisplayType}
-                    apiKey={"51c2265d2d2df87c32348b2f6dbca729"}></StateTable>
+                    apiKey={"51c2265d2d2df87c32348b2f6dbca729"}
+                    ></StateTable>
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
                       <p>All currently available states are selectable in the dropdown menu,

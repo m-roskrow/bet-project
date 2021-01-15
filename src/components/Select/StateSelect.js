@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   
   export default function SimpleSelect(props) {
     const classes = useStyles();
-    const [value, setValue] = React.useState("CO");
+    const [value, setValue] = React.useState("NJ");
   
     const handleChange = (event) => {
       setValue(event.target.value);
@@ -37,11 +37,15 @@ const useStyles = makeStyles((theme) => ({
               id="demo-simple-select"
               value={value}
               onChange={handleChange}
-              
             >
-              <MenuItem value={"CO"}>CO</MenuItem>
-              <MenuItem value={"IA"}>IA</MenuItem>
-              <MenuItem value={"IL"}>IL</MenuItem>
+              <MenuItem value={"NJ"}>New Jersey</MenuItem>
+              <MenuItem value={"PA"}>Pennsylvania</MenuItem>
+              <MenuItem value={"CO"}>Colorado</MenuItem>
+              <MenuItem value={"IL"}>Illinois</MenuItem>
+              <MenuItem value={"IA"}>Iowa</MenuItem>
+              <MenuItem value={"WV"}>West Virginia</MenuItem>
+              <MenuItem value={"IN"}>Indiana</MenuItem>
+              <MenuItem value={"TN"}>Tennessee</MenuItem>
             </Select>
           </FormControl>
           </GridItem>

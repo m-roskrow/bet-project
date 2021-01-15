@@ -15,6 +15,7 @@ import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import {v4 as uuidv4} from 'uuid';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const useRowStyles = makeStyles({
   root: {
@@ -24,14 +25,16 @@ const useRowStyles = makeStyles({
   },
 });
 
-function createData(team1, bestT1, team2, bestT2, date, sites) {
+function createData(team1, bestT1, team2, bestT2, date, sites, bestSites1, bestSites2) {
   return {
     team1,
     bestT1,
     team2,
     bestT2,
     date,
-    sites
+    sites,
+    bestSites1,
+    bestSites2,
   };
 }
 
@@ -42,19 +45,19 @@ function Row(props) {
 
   return (
     <React.Fragment>
-      <TableRow className={classes.root}>
+      <TableRow hover={true} className={classes.root}>
         <TableCell >
           <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">{row.team1}</TableCell>
-        <TableCell align="left">{row.bestT1}</TableCell>
+        <TableCell align="left">{row.bestT1} at: {row.bestSites1}</TableCell>
         <TableCell align="left">{row.team2}</TableCell>
-        <TableCell align="left">{row.bestT2}</TableCell>
+        <TableCell align="left">{row.bestT2} at: {row.bestSites2}</TableCell>
         <TableCell align="right">{row.date}</TableCell>
       </TableRow>
-      <TableRow>
+      <TableRow hover={true}>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>
@@ -63,7 +66,7 @@ function Row(props) {
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
-                  <TableRow>
+                  <TableRow hover={true}>
                     <TableCell>Site</TableCell>
                     <TableCell align="right">{row.team1} Odds</TableCell>
                     <TableCell align="right">{row.team2} Odds</TableCell>
@@ -72,15 +75,16 @@ function Row(props) {
                 </TableHead>
                 <TableBody>
                   {row.sites.map((sitesRow) => (
-                    <TableRow key={sitesRow.site}>
-                      <TableCell component="th" scope="row">
-                        {sitesRow.site}
-                      </TableCell>
-                      <TableCell align="right">{sitesRow.odds1}</TableCell>
-                      <TableCell align="right">{sitesRow.odds2}</TableCell>
-                      <TableCell align="right">{sitesRow.type}</TableCell>
-                      
-                    </TableRow>
+                    <Tooltip key={uuidv4()} title={"Last Update: " + sitesRow.updateTime}>
+                      <TableRow hover={true}>
+                        <TableCell component="th" scope="row">
+                          {sitesRow.site}
+                        </TableCell>
+                        <TableCell align="right">{sitesRow.odds1}</TableCell>
+                        <TableCell align="right">{sitesRow.odds2}</TableCell>
+                        <TableCell align="right">{sitesRow.type}</TableCell>
+                      </TableRow>
+                    </Tooltip>
                   ))}
                 </TableBody>
               </Table>
@@ -95,9 +99,9 @@ function Row(props) {
 Row.propTypes = {
   row: PropTypes.shape({
     team1: PropTypes.string.isRequired,
-    bestT1: PropTypes.number.isRequired,
+    bestT1: PropTypes.string.isRequired,
     team2: PropTypes.string.isRequired,
-    bestT2: PropTypes.number.isRequired,
+    bestT2: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     sites: PropTypes.arrayOf(
       PropTypes.shape({
@@ -105,136 +109,224 @@ Row.propTypes = {
         odds1: PropTypes.string.isRequired,
         odds2: PropTypes.string.isRequired,
         type: PropTypes.string.isRequired,
+        updateTime: PropTypes.string.isRequired,
+        siteKey: PropTypes.string.isRequired
       }),
     ).isRequired,
   }).isRequired,
 };
 
 
-/* EXPANDED ARROWS NOT WORKING, NEED TO UPDATE HOME TEAMS HANDLING AND NEED TO ADD OTHER ODD TYPE SUPPORT*/
-/* TODO - add different odd types support
-        - add proper home team support 
-        - add proper date representation 
-        - add number of odd types column
-        - add odd sorting functionality for both ascending and descending / highlight best odds for each team*/
-function updateRows(data, market) {
+/* function which generates the tabular data from the input data taken from the-odds-api*/
+/* */
+function updateRows(data, market, state) {
   
-  const numGames = data[0].data.length;
+  const numGames = data.data.length;
   const output = [];
   const bestSitesArray1 = [];
   const bestSitesArray2 = [];
   for (var i = 0 ; i < numGames; i++){
-    const homeTeam = data[0].data[i].home_team;
-    var team1 = data[0].data[i].teams[0];
-    var team2 = data[0].data[i].teams[1];
+    const homeTeam = data.data[i].home_team;
+    var team1 = data.data[i].teams[0];
+    var team2 = data.data[i].teams[1];
     if (team1 === homeTeam) team1 += " (H)";
     if (team2 === homeTeam) team2 += " (H)";
-    const tempDate = data[0].data[i].commence_time;
+    const tempDate = data.data[i].commence_time;
     const date = tempDate.substring(0,10);
-    const numSites = data[0].data[i].sites_count;
+    const numSites = data.data[i].sites_count;
     const sitesArray = [];
     var bestT1 = -10000;
     var bestT2 = -10000;
+    var bestT1Arr = ["over", -1, 0];
+    var bestT2Arr = ["under", -1, 0];
     var bestIndex1 = [];
     var bestIndex2 = [];
     for (var j = 0; j < numSites; j++){
-      const siteName = data[0].data[i].sites[j].site_nice;
-      const oddsType = market;
-      var oddsT1;
-      var oddsT2;
-      var tempT1;
-      var tempT2;
-      /* populate inner odds table - catching errors on odd fetching in case not available for that sport type*/
-      switch(oddsType) {
-        case ("h2h"):
-          try {
-            oddsT1 = data[0].data[i].sites[j].odds.h2h[0].toString();
-            oddsT2 = data[0].data[i].sites[j].odds.h2h[1].toString();
-            tempT1 = data[0].data[i].sites[j].odds.h2h[0]
-            tempT2 = data[0].data[i].sites[j].odds.h2h[1]
-          }
-          catch(err) {
-            oddsT1 = "unavailable";
-            oddsT2 = "unavailable"
-          }
-          break;
-        case ("totals"):
-          try {
-            oddsT1 = data[0].data[i].sites[j].odds.totals.position[0] + " " + data[0].data[i].sites[j].odds.totals.points[0].toString() + ", " +  data[0].data[i].sites[j].odds.totals.odds[0].toString();
-            oddsT2 = data[0].data[i].sites[j].odds.totals.position[1] + " " + data[0].data[i].sites[j].odds.totals.points[1].toString() + ", " +  data[0].data[i].sites[j].odds.totals.odds[1].toString();
-          }
-          catch(err) {
-            console.log(err);
-            oddsT1 = "unavailable";
-            oddsT2 = "unavailable"
-          }
-          break;
-        case ("outrights"):
-          try {
-            oddsT1 = data[0].data[i].sites[j].odds.outrights[0].toString();
-            oddsT2 = data[0].data[i].sites[j].odds.outrights[1].toString();
-          }
-          catch(err) {
-            oddsT1 = "unavailable";
-            oddsT2 = "unavailable"
-          }
-          break;
-        case ("spreads"):
-          try {
-            oddsT1 = data[0].data[i].sites[j].odds.spreads.points[0].toString() + ", " + data[0].data[i].sites[j].odds.spreads.odds[0].toString();
-            oddsT2 = data[0].data[i].sites[j].odds.spreads.points[1].toString() + ", " + data[0].data[i].sites[j].odds.spreads.odds[1].toString();
-          }
-          catch(err) {
-            oddsT1 = "unavailable";
-            oddsT2 = "unavailable"
-          }
-          break;
-        default:
-          oddsT1 = "error in odds type";
-          oddsT2 = "error in odds type";
+      const siteKey = (data.data[i].sites[j].site_key);
+      if (opStateCheck(siteKey, state)) {
+        const siteName = data.data[i].sites[j].site_nice;
+        const oddsType = market;
+        var oddsT1;
+        var oddsT2;
+        var tempT1;
+        var tempT2;
+        /* populate inner odds table - catching errors on odd fetching in case not available for that sport type
+        also includes handling to generate the highlighted "best" odds for each category
+        TODO - look at spreads and totals - maybe include best odds for each position rather than best of first encountered*/
+        switch(oddsType) {
+          case ("h2h"):
+            try {
+              oddsT1 = data.data[i].sites[j].odds.h2h[0].toString();
+              oddsT2 = data.data[i].sites[j].odds.h2h[1].toString();
+              tempT1 = data.data[i].sites[j].odds.h2h[0];
+              tempT2 = data.data[i].sites[j].odds.h2h[1];
+              /* calculating best odds */
+              if (tempT1 > bestT1){
+                bestIndex1 = [j];
+                bestT1 = tempT1;}
+              else if (tempT1 === bestT1){
+                bestIndex1.push(j);}
+              if (tempT2 > bestT2){
+                bestIndex2 = [j];
+                bestT2 = tempT2;}
+              else if (tempT2 === bestT2){
+                bestIndex2.push(j);}
+            }
+            catch(err) {
+              oddsT1 = "unavailable";
+              oddsT2 = "unavailable"
+            }
+            break;
+          case ("totals"):
+            try {
+              oddsT1 = data.data[i].sites[j].odds.totals.position[0] + " " + data.data[i].sites[j].odds.totals.points[0].toString() + ", " +  data.data[i].sites[j].odds.totals.odds[0].toString();
+              oddsT2 = data.data[i].sites[j].odds.totals.position[1] + " " + data.data[i].sites[j].odds.totals.points[1].toString() + ", " +  data.data[i].sites[j].odds.totals.odds[1].toString();
+              tempT1 = [data.data[i].sites[j].odds.totals.position[0], data.data[i].sites[j].odds.totals.points[0], data.data[i].sites[j].odds.totals.odds[0]];
+              tempT2 = [data.data[i].sites[j].odds.totals.position[1], data.data[i].sites[j].odds.totals.points[1], data.data[i].sites[j].odds.totals.odds[1]];
+              if (tempT1[1] === bestT1Arr[1] && tempT1[2] === bestT1Arr[2]){
+                bestIndex1.push(j);
+              }
+              else if (bestT1Arr[1] === -1 || (tempT1[1] === bestT1Arr[1] && tempT1[2] > bestT1Arr[2])){
+                bestIndex1 = [j];
+                bestT1Arr = tempT1;
+              }
+              if (tempT2[1] === bestT2Arr[1] && tempT2[2] === bestT2Arr[2]){
+                bestIndex2.push(j);
+              }
+              else if (bestT2Arr[1] === -1 || (tempT2[1] === bestT2Arr[1] && tempT2[2] > bestT2Arr[2])){
+                bestIndex2 = [j];
+                bestT2Arr = tempT2;
+              }
+            }
+            catch(err) {
+              console.log(err);
+              oddsT1 = "unavailable";
+              oddsT2 = "unavailable"
+            }
+            break;
+          case ("outrights"):
+            try {
+              oddsT1 = data.data[i].sites[j].odds.outrights[0].toString();
+              oddsT2 = data.data[i].sites[j].odds.outrights[1].toString();
+            }
+            catch(err) {
+              oddsT1 = "unavailable";
+              oddsT2 = "unavailable"
+            }
+            break;
+          case ("spreads"):
+            try {
+              oddsT1 = data.data[i].sites[j].odds.spreads.points[0].toString() + ", " + data.data[i].sites[j].odds.spreads.odds[0].toString();
+              oddsT2 = data.data[i].sites[j].odds.spreads.points[1].toString() + ", " + data.data[i].sites[j].odds.spreads.odds[1].toString();
+              tempT1 = [data.data[i].sites[j].odds.spreads.points[0], data.data[i].sites[j].odds.spreads.odds[0]]
+              tempT2 = [data.data[i].sites[j].odds.spreads.points[1], data.data[i].sites[j].odds.spreads.odds[1]]
+
+              if (tempT1[0] === bestT1Arr[0] && tempT1[1] === bestT1Arr[1]){
+                bestIndex1.push(j);
+              }
+              else if (bestT1Arr[1] === -1 || (tempT1[0] === bestT1Arr[0] && tempT1[1] > bestT1Arr[1])){
+                bestIndex1 = [j];
+                bestT1Arr = tempT1;
+              }
+              if (tempT2[0] === bestT2Arr[0] && tempT2[1] === bestT2Arr[1]){
+                bestIndex2.push(j);
+              }
+              else if (bestT2Arr[1] === -1 || (tempT2[0] === bestT2Arr[0] && tempT2[1] > bestT2Arr[1])){
+                bestIndex2 = [j];
+                bestT2Arr = tempT2;
+              }
+            }
+            catch(err) {
+              oddsT1 = "unavailable";
+              oddsT2 = "unavailable"
+            }
+            break;
+          default:
+            oddsT1 = "error in odds type";
+            oddsT2 = "error in odds type";
+        }
+        
+        
+        const tempTime = data.data[i].sites[j].last_update;
+        const updateTime = tempTime.substring(0, 10) + " " + tempTime.substring(11,19) + " GMT"
+        /* check operator / state combination is supported */
+        
+        sitesArray.push({site: siteName, odds1: oddsT1, odds2: oddsT2, type: oddsType, updateTime: updateTime, siteKey: siteKey});
+        }
       }
-      /* calculating best odds */
-      if (tempT1 > bestT1){
-        bestIndex1 = [j];
-        bestT1 = tempT1;}
-      else if (tempT1 === bestT1){
-        bestIndex1.push(j);}
-      if (tempT2 > bestT2){
-        bestIndex2 = [j];
-        bestT2 = tempT2;}
-      else if (tempT2 === bestT2){
-        bestIndex2.push(j);}
-      
-      const tempTime = data[0].data[i].sites[j].last_update;
-      const updateTime = tempTime.substring(0, 10) + " " + tempTime.substring(11,19) + " GMT"
-      sitesArray.push({site: siteName, odds1: oddsT1, odds2: oddsT2, type: oddsType});
-      
-    }
-    const tempArray1 = [];
+    var bestSiteNice1 = "";
+    var bestSiteNice2 = "";
     for (var z = 0; z < bestIndex1.length; z++){
-      tempArray1.push(data[0].data[i].sites[bestIndex1[z]].site_nice);
+      if (z===0) bestSiteNice1 = (data.data[i].sites[bestIndex1[z]].site_nice) 
+      else bestSiteNice1 = bestSiteNice1 + ", " + (data.data[i].sites[bestIndex1[z]].site_nice);
     }
-    /* TODO USE THIS ARRAY TO SHOW SITES WITH BEST ODDS FOR BOTH TEAMS - MAYBE SHOW SITE NAME IF ONLY 1 AND EXPAND OPTION FOR MORE THAN 1???*/
-    bestSitesArray1.push(tempArray1);
-    console.log(bestSitesArray1);
-    output.push(createData (team1, bestT1, team2, bestT2, date, sitesArray))
+    for (z = 0; z < bestIndex2.length; z++){
+      if (z===0) bestSiteNice2 = (data.data[i].sites[bestIndex2[z]].site_nice) 
+      else bestSiteNice2 = bestSiteNice2 + ", " + (data.data[i].sites[bestIndex2[z]].site_nice);
+    }
+    bestSitesArray1.push(bestSiteNice1);
+    bestSitesArray2.push(bestSiteNice2);
+    switch(market){
+      case ("h2h"): 
+        bestT1 = bestT1.toString();
+        bestT2 = bestT2.toString();
+        break;
+      case ("totals"):
+        bestT1 = bestT1Arr[0] + " " + bestT1Arr[1].toString() + ": " + bestT1Arr[2].toString();
+        bestT2 = bestT2Arr[0] + " " + bestT2Arr[1].toString() + ": " + bestT2Arr[2].toString();
+        break;
+      case ("spreads"):
+        bestT1 = bestT1Arr[0] + ", " + bestT1Arr[1];
+        bestT2 = bestT2Arr[0] + ", " + bestT2Arr[1];
+        break;
+      default:
+        bestT1 = bestT1.toString();
+        bestT2 = bestT2.toString();
+        break;
+    }
+    output.push(createData (team1, bestT1, team2, bestT2, date, sitesArray, bestSiteNice1, bestSiteNice2 ))
   }
   return output;
 }
 
+/* check if bet operator / state combo is supported in operators.json */
+function opStateCheck(key, state){
+  var opData = (require('./operators.json'));
+  if (opData.operators[key] === undefined || !opData.operators[key].include) return false
+  else if (opData.operators[key].states.length === 0){
+    /* RETURN TRUE FOR NOW BUT EVENTUALLY SHOULD BE FALSE IF NO STATE DATA */
+    console.log("err no states in state table for: " + key);
+    return false
+  }
+  else if (opData.operators[key].states.includes(state)){
+    return true
+  }
+  return false
+}
+
+
+
 export default function TableCustom(props) {
-  const data = React.useState(props.data);
+  const [data, setData] = React.useState(props.data);
+  const [state, setState] = React.useState(props.state);
   const [market, setMarket] = React.useState(props.market);
+  /*update props on change */
+  const updateProps = (newProps) => 
+        {setMarket(newProps.market); 
+        setData(newProps.data); 
+        setState(newProps.state);}
+
   React.useEffect(() => 
-      setMarket(props.market),
-      [props.market]
+      updateProps(props),
+      [props.state, props.data, props.market]
     );
-  const rows = updateRows(data, market);
+  
+  const rows = updateRows(data, market, state);
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
-          <TableRow>
+          <TableRow hover={true}>
             <TableCell />
             <TableCell align="left">Team 1</TableCell>
             <TableCell align="left">T1 Best Odds</TableCell>

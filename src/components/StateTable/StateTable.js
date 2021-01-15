@@ -3,18 +3,21 @@ import useAxios from 'axios-hooks';
 import TableCustom from './TableCustom.js';
   
   export default function StateTable(props) {
-    
+    const [state, setState] = React.useState(props.state)
     const [sport] = React.useState(props.sport);
     const [region] = React.useState(props.region);
     const [market, setMarket] = React.useState(props.market);
     const [oddsFormat, setOddsFormat] = React.useState(props.oddsFormat);
     const [apiKey] = React.useState(props.apiKey);
     const [sportType] = React.useState(props.sportType);
-    const updateProps = (newProps) => {setMarket(newProps.market); setOddsFormat(newProps.oddsFormat)}
+    const updateProps = (newProps) => 
+      {setMarket(newProps.market); 
+      setOddsFormat(newProps.oddsFormat); 
+      setState(newProps.state);}
     
     React.useEffect(() => 
       updateProps(props),
-      [props.market, props.oddsFormat]
+      [props.market, props.oddsFormat, props.state]
     );
 
     const apiLink = "https://api.the-odds-api.com/v3/odds/?sport=" + sport + "&region=" + region + "&mkt=" + market + "&dateFormat=iso&oddsFormat=" + oddsFormat + "&apiKey=" + apiKey;
@@ -29,7 +32,7 @@ import TableCustom from './TableCustom.js';
         <div>
        <p>Click an arrow next to a feature to expand that row</p>
           
-        <TableCustom data={data} sportType={sportType} market={market}></TableCustom>
+        <TableCustom data={data} sportType={sportType} market={market} state={state}></TableCustom>
         </div>
         );
 }

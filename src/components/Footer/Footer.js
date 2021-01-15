@@ -37,7 +37,7 @@ export default function Footer(props) {
                 className={classes.block}
                 target="_blank"
               >
-                Money Line Checker
+                Money Lines Checker
               </a>
             </ListItem>
             <ListItem className={classes.inlineBlock}>

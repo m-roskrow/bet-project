@@ -41,7 +41,7 @@ export default function NCAABPage(props) {
       <Header
         absolute
         color="transparent"
-        brand="Odds Comparison"
+        brand="Money Lines Checker"
         rightLinks={<HeaderLinks />}
         {...rest}
       />
