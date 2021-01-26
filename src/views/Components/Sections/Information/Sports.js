@@ -19,7 +19,8 @@ import Typography from '@material-ui/core/Typography';
 
 
 const createNewsCards = (sport, indexStart) => {  
-  return(<GridContainer justify="space-evenly" spacing={1}>
+  return (<p>news not currently working</p>)
+  /*return(<GridContainer justify="space-evenly" spacing={1}>
     <GridItem xs={3}>
       <SportsNews sport={sport} index={indexStart}></SportsNews>
     </GridItem><GridItem xs={3}>
@@ -29,7 +30,7 @@ const createNewsCards = (sport, indexStart) => {
     </GridItem><GridItem xs={3}>
       <SportsNews sport={sport} index={indexStart+3}></SportsNews>
     </GridItem>
-  </GridContainer>)
+  </GridContainer>)*/
 }
 
 const useStyles = makeStyles(styles);
@@ -67,12 +68,7 @@ export default function SectionPills() {
                           >
                               FULL ODDS TABLE
                           </Button>
-                        </GridItem>
-                        </GridContainer>
-                        <OddsHighlights></OddsHighlights>
-                        <GridContainer>
-                          <GridItem>
-                          <Typography variant = "h4" align="center">NFL News</Typography></GridItem>
+                          </GridItem>
                         </GridContainer>
                         {createNewsCards("NFL", 0)}
                         </div>

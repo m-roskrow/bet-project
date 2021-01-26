@@ -68,7 +68,7 @@ const getDate = () => {
                         <CardContent><Typography gutterBottom variant="body2" component="h2">
                           {shortenString(data.articles[index].title)}
                           </Typography>
-                          <Typography variant="body3" color="textSecondary" component="p">
+                          <Typography variant="body2" color="textSecondary" component="p">
                             {"Source: " + data.articles[index].source.name}
                           </Typography>
                           </CardContent>
