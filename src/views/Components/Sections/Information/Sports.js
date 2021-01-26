@@ -12,9 +12,25 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import NavPills from "components/NavPills/NavPills.js";
 import Button from "components/CustomButtons/Button.js";
-
-
+import SportsNews from "./News/SportsNews.js"
+import OddsHighlights from "./OddsHighlights/OddsHighlights.js"
 import styles from "assets/jss/material-kit-react/views/componentsSections/pillsStyle.js";
+import Typography from '@material-ui/core/Typography';
+
+
+const createNewsCards = (sport, indexStart) => {  
+  return(<GridContainer justify="space-evenly" spacing={1}>
+    <GridItem xs={3}>
+      <SportsNews sport={sport} index={indexStart}></SportsNews>
+    </GridItem><GridItem xs={3}>
+      <SportsNews sport={sport} index={indexStart+1}></SportsNews>
+    </GridItem><GridItem xs={3}>
+      <SportsNews sport={sport} index={indexStart+2}></SportsNews>
+    </GridItem><GridItem xs={3}>
+      <SportsNews sport={sport} index={indexStart+3}></SportsNews>
+    </GridItem>
+  </GridContainer>)
+}
 
 const useStyles = makeStyles(styles);
 
@@ -25,81 +41,113 @@ export default function SectionPills() {
       <div className={classes.container}>
         <div id="navigation-pills">
           <div className={classes.title}>
-            <h3>Currently Supported Sports Leagues</h3>
+            <Typography variant = "h2" align="center">News And Odds</Typography>
           </div>
-          <GridContainer justify="center">
-          <GridItem xs={12} sm={12} md={12} lg={12} xl ={12}>
+          <GridContainer justify="space-evenly">
+          <GridItem  xs={12} sm={12} md={12} lg={12} xl ={12}>
               <NavPills
+                
                 color="primary"
                 tabs={[
                   {
                     tabButton: "NFL",
                     tabIcon: Football,
                     tabContent: (
-                      <span>
-                        <p>The National Football League (USA)</p>
-                        <Button
-                            round
-                            href="/nfl-odds"
-                            color="primary"
-                            className={classes.navLink}
-                        >
-                            NFL ODDS TABLE
-                        </Button>
-                      </span>
+                      <div>
+                      <GridContainer>
+                        <GridItem xs={10}>
+                          <h3>The National Football League (USA)</h3>
+                        </GridItem>
+                        <GridItem xs={2}>
+                          <Button
+                              round
+                              href="/nfl-odds"
+                              color="rose"
+                              className={classes.navLink}
+                          >
+                              FULL ODDS TABLE
+                          </Button>
+                        </GridItem>
+                        </GridContainer>
+                        <OddsHighlights></OddsHighlights>
+                        <GridContainer>
+                          <GridItem>
+                          <Typography variant = "h4" align="center">NFL News</Typography></GridItem>
+                        </GridContainer>
+                        {createNewsCards("NFL", 0)}
+                        </div>
                     )
                   },
                   {
                     tabButton: "NBA",
                     tabIcon: Basketball,
                     tabContent: (
-                      <span>
-                        <p>The National Basketball Association (USA)</p>
-                        <Button
-                            round
-                            href="/nba-odds"
-                            color="primary"
-                            className={classes.navLink}
-                        >
-                            NBA ODDS TABLE
-                        </Button>
-                      </span>
-                      
+                      <div>
+                      <GridContainer>
+                        <GridItem xs={10}>
+                          <h3>The National Basketball Association (USA)</h3>
+                        </GridItem>
+                        <GridItem xs={2}>
+                          <Button
+                              round
+                              href="/nba-odds"
+                              color="rose"
+                              className={classes.navLink}
+                          >
+                              FULL ODDS TABLE
+                          </Button>
+                        </GridItem>
+                        </GridContainer>
+                        {createNewsCards("NBA", 0)}
+                        </div>
                     )
                   },
                   {
                     tabButton: "NHL",
                     tabIcon: Hockey,
                     tabContent: (
-                      <span>
-                        <p>The National Hockey League (USA)</p>
-                        <Button
-                            round
-                            href="/nhl-odds"
-                            color="primary"
-                            className={classes.navLink}
-                        >
-                            NHL ODDS TABLE
-                        </Button>
-                      </span>
+                      <div>
+                      <GridContainer>
+                        <GridItem xs={10}>
+                          <h3>The National Hockey League (USA)</h3>
+                        </GridItem>
+                        <GridItem xs={2}>
+                          <Button
+                              round
+                              href="/nhl-odds"
+                              color="rose"
+                              className={classes.navLink}
+                          >
+                              FULL ODDS TABLE
+                          </Button>
+                        </GridItem>
+                        </GridContainer>
+                        {createNewsCards("NHL", 0)}
+                        </div>
                     )
                   },
                   {
-                    tabButton: "NCAA",
+                    tabButton: "NCAAB",
                     tabIcon: Basketball,
                     tabContent: (
-                      <span>
-                        <p> National Collegiate Athletic Association. College Basketball League (USA)</p>
-                        <Button
-                            round
-                            href="/ncaa-odds"
-                            color="primary"
-                            className={classes.navLink}
-                        >
-                            NCAA ODDS TABLE
-                        </Button>
-                      </span>
-                      
+                      <div>
+                      <GridContainer>
+                        <GridItem xs={10}>
+                          <h3>The National Collegiate Athletics Association (Basketball - USA)</h3>
+                        </GridItem>
+                        <GridItem xs={2}>
+                          <Button
+                              round
+                              href="/ncaab-odds"
+                              color="rose"
+                              className={classes.navLink}
+                          >
+                              FULL ODDS TABLE
+                          </Button>
+                        </GridItem>
+                        </GridContainer>
+                        {createNewsCards("college basketball", 0)}
+                        </div>
                     )
                   }
                 ]}

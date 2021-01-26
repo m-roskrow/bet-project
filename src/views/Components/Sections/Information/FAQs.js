@@ -14,7 +14,7 @@ import styles from "assets/jss/material-kit-react/views/componentsSections/pills
 
 const useStyles = makeStyles(styles);
 
-export default function SectionPills() {
+export default function FAQs() {
   const classes = useStyles();
   return (
     <div className={classes.section}>
@@ -64,13 +64,11 @@ export default function SectionPills() {
                     tabContent: (
                       <span>
                         <p>
-                          In order to limit API requests each visitor is limited to one 
-                          odds refresh every 2 minutes
+                          The Odds Tables refresh every time a new sport, state, market or odd type is selected
                         </p>
                         <br />
                         <p>
-                          If they aren't refreshing after these 2 minutes have passed, the odds
-                          probably aren't changing!
+                          If refreshing the page does not update the odds, they probably haven't changed.
                         </p>
                       </span>
                     )

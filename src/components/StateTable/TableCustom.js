@@ -51,11 +51,11 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">{row.team1}</TableCell>
+        <TableCell component="th" scope="row" align="left">{row.date}</TableCell>
+        <TableCell align="left">{row.team1}</TableCell>
         <TableCell align="left">{row.bestT1} at: {row.bestSites1}</TableCell>
         <TableCell align="left">{row.team2}</TableCell>
-        <TableCell align="left">{row.bestT2} at: {row.bestSites2}</TableCell>
-        <TableCell align="right">{row.date}</TableCell>
+        <TableCell align="right">{row.bestT2} at: {row.bestSites2}</TableCell>
       </TableRow>
       <TableRow hover={true}>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -119,7 +119,7 @@ Row.propTypes = {
 
 /* function which generates the tabular data from the input data taken from the-odds-api*/
 /* */
-function updateRows(data, market, state) {
+function updateRows(data, market, state, filter) {
   
   const numGames = data.data.length;
   const output = [];
@@ -131,12 +131,16 @@ function updateRows(data, market, state) {
     var team2 = data.data[i].teams[1];
     if (team1 === homeTeam) team1 += " (H)";
     if (team2 === homeTeam) team2 += " (H)";
-    const tempDate = data.data[i].commence_time;
-    const date = tempDate.substring(0,10);
+    const tempDate = new Date((data.data[i].commence_time));
+    //TODO sort date formatting
+    // TODO implement search filtering
+    console.log(tempDate);
+    const date = tempDate.toDateString();
+    
     const numSites = data.data[i].sites_count;
     const sitesArray = [];
-    var bestT1 = -10000;
-    var bestT2 = -10000;
+    var bestT1 = -999999;
+    var bestT2 = -999999;
     var bestT1Arr = ["over", -1, 0];
     var bestT2Arr = ["under", -1, 0];
     var bestIndex1 = [];
@@ -266,6 +270,7 @@ function updateRows(data, market, state) {
     }
     bestSitesArray1.push(bestSiteNice1);
     bestSitesArray2.push(bestSiteNice2);
+    // handling to represent odds in a legible way depending on type
     switch(market){
       case ("h2h"): 
         bestT1 = bestT1.toString();
@@ -284,7 +289,8 @@ function updateRows(data, market, state) {
         bestT2 = bestT2.toString();
         break;
     }
-    output.push(createData (team1, bestT1, team2, bestT2, date, sitesArray, bestSiteNice1, bestSiteNice2 ))
+    
+    if (filterCheck (team1, team2, filter)) output.push(createData (team1, bestT1, team2, bestT2, date, sitesArray, bestSiteNice1, bestSiteNice2 ));
   }
   return output;
 }
@@ -294,7 +300,6 @@ function opStateCheck(key, state){
   var opData = (require('./operators.json'));
   if (opData.operators[key] === undefined || !opData.operators[key].include) return false
   else if (opData.operators[key].states.length === 0){
-    /* RETURN TRUE FOR NOW BUT EVENTUALLY SHOULD BE FALSE IF NO STATE DATA */
     console.log("err no states in state table for: " + key);
     return false
   }
@@ -304,35 +309,55 @@ function opStateCheck(key, state){
   return false
 }
 
+//check if row viable for adding to table according to team filter (supplied from parent component StateTable.js)
+function filterCheck(team1, team2, filter){
+  // remove whitespace and decapitalise then check for filter match on start of string
+  var newFilt = filter.replace(/ /g,'').toLowerCase();
+  var filtLength = newFilt.length;
+  var newT1 = team1.replace(/ /g,'').toLowerCase().substring(0,filtLength);
+  var newT2 = team2.replace(/ /g,'').toLowerCase().substring(0,filtLength);
+  if (newT1 === newFilt || newT2 === newFilt) return true;
+  //check for searches of non-starting word
+  else {
+    var teamsArr = team1.split(" ").concat(team2.split(" "));
+    var output = false;
+    for (var i = 0; i<teamsArr.length; i++){
+      if (teamsArr[i].toLowerCase().substring(0,filtLength) === newFilt) output = true; 
+    }
+    return output;
+  };
+}
 
 
 export default function TableCustom(props) {
   const [data, setData] = React.useState(props.data);
   const [state, setState] = React.useState(props.state);
   const [market, setMarket] = React.useState(props.market);
+  const [filter, setFilter] = React.useState(props.filter);
   /*update props on change */
   const updateProps = (newProps) => 
         {setMarket(newProps.market); 
         setData(newProps.data); 
-        setState(newProps.state);}
+        setState(newProps.state);
+        setFilter(newProps.filter);}
 
   React.useEffect(() => 
       updateProps(props),
-      [props.state, props.data, props.market]
+      [props.state, props.data, props.market, props.filter]
     );
   
-  const rows = updateRows(data, market, state);
+  const rows = updateRows(data, market, state, filter);
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow hover={true}>
             <TableCell />
-            <TableCell align="left">Team 1</TableCell>
-            <TableCell align="left">T1 Best Odds</TableCell>
-            <TableCell align="left">Team 2</TableCell>
-            <TableCell align="left">T2 Best Odds</TableCell>
-            <TableCell align="right">Date of Fixture</TableCell>            
+            <TableCell align="left">Date of Fixture</TableCell>
+            <TableCell align="right">Team 1</TableCell>
+            <TableCell align="right">T1 Best Odds</TableCell>
+            <TableCell align="right">Team 2</TableCell>
+            <TableCell align="right">T2 Best Odds</TableCell>            
           </TableRow>
         </TableHead>
         <TableBody>

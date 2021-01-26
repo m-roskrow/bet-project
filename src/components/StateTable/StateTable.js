@@ -1,6 +1,7 @@
 import React from 'react';
 import useAxios from 'axios-hooks';
 import TableCustom from './TableCustom.js';
+import GameSearch from 'components/Select/GameSearch.js';
   
   export default function StateTable(props) {
     const [state, setState] = React.useState(props.state)
@@ -10,6 +11,7 @@ import TableCustom from './TableCustom.js';
     const [oddsFormat, setOddsFormat] = React.useState(props.oddsFormat);
     const [apiKey] = React.useState(props.apiKey);
     const [sportType] = React.useState(props.sportType);
+    const [filter, setFilter] = React.useState("");
     const updateProps = (newProps) => 
       {setMarket(newProps.market); 
       setOddsFormat(newProps.oddsFormat); 
@@ -24,15 +26,17 @@ import TableCustom from './TableCustom.js';
     const [{ data, loading, error }, refetch] = useAxios(
       apiLink
     )
-    if (loading) return <p>Loading...</p>
-    if (error) return <p>Error!</p>
-    
+    if (loading) {console.log("API loaded"); return <p>Loading...</p>}
+    if (error) return <p>Error fetching API data!</p>
+    const handleChangeSearch = (newValue) => {setFilter(newValue);};
    
     return (
         <div>
-       <p>Click an arrow next to a feature to expand that row</p>
-          
-        <TableCustom data={data} sportType={sportType} market={market} state={state}></TableCustom>
+          <div>
+            <p>Click an arrow next to a fixture to show all available odds for that fixture. To filter by team use the search box below.</p>
+            <GameSearch onChange={handleChangeSearch}></GameSearch>  
+          </div>
+        <TableCustom data={data} sportType={sportType} market={market} state={state} filter={filter}></TableCustom>
         </div>
         );
 }

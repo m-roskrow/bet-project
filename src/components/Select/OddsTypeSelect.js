@@ -21,12 +21,8 @@ const useStyles = makeStyles((theme) => ({
   export default function OddsTypeSelect(props) {
     const classes = useStyles();
     const [value, setValue] = React.useState("h2h");
-    const oddsCode = React.useState(props.oddsCode);
-    var menuOptions = [{value: "h2h"}, {value: "outrights"}, {value: "totals"}, {value: "spreads"}]
-    if (oddsCode === 0) {
-        menuOptions = [{value: "h2h"}, {value: "outrights"}, {value: "totals"}, {value: "spreads"}]
-        console.log("Hi")
-    }
+    var menuOptions = [{value: "h2h", text: "Moneylines"}, {value: "outrights", text: "Outrights (not supported)"}, {value: "totals", text: "Totals"}, {value: "spreads", text: "Spreads"}]
+    
     const handleChange = (event) => {
         setValue(event.target.value);
         props.onChange(event.target.value);
@@ -45,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
               onChange={handleChange}
               options = {menuOptions}
             >
-              {menuOptions.map((option) => (<MenuItem value = {option.value} key={option.value}>{option.value}</MenuItem>))}
+              {menuOptions.map((option) => (<MenuItem value = {option.value} key={option.value}>{option.text}</MenuItem>))}
             </Select>
           </FormControl>
           </GridItem>

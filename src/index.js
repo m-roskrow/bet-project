@@ -13,6 +13,7 @@ import NBAPage from "views/SportsPages/NBAPage.js";
 import NHLPage from "views/SportsPages/NHLPage.js";
 import NCAABPage from "views/SportsPages/NCAABPage.js";
 import AboutUs from "views/About/AboutUs.js";
+import TextPageSetup from "views/TextPages/TextPageSetup";
 
 var hist = createBrowserHistory();
 
@@ -25,6 +26,7 @@ ReactDOM.render(
       <Route path="/nhl-odds" component={NHLPage} />
       <Route path="/ncaab-odds" component={NCAABPage} />
       <Route path="/about-us" component={AboutUs} />
+      <Route path="/legal" component={TextPageSetup} />
     </Switch>
   </Router>,
   document.getElementById("root")

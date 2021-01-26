@@ -30,6 +30,12 @@
             "link": "examplelink",
             "logoLocation": "assets/imgs/brands/bookmaker-eu"
         },
+        "bogata": {
+            "include": true,
+            "states": [],
+            "link": "examplelink",
+            "logoLocation": "assets/imgs/brands/bogata"
+        },
         "bovada": {
             "include": false,
             "states": [],
@@ -38,7 +44,7 @@
         },
         "caesars": {
             "include": true,
-            "states": ["NJ"],
+            "states": [],
             "link": "examplelink",
             "logoLocation": "assets/imgs/brands/caesars"
         },

@@ -58,7 +58,7 @@ export default function NHLPage(props) {
           <GridContainer justify="center">
           <GridItem >
               <div className={classes.brand}>
-                <h1  className={classes.title}>NHL Matches</h1>
+                <h1  className={classes.title}>NHL Fixtures</h1>
                 <b></b>
               </div>
             </GridItem>
@@ -66,12 +66,14 @@ export default function NHLPage(props) {
               <Card className={classes[cardAnimaton]}>
                 <form className={classes.form}>
                   <CardHeader color="info" className={classes.cardHeader} >
-                    <GridContainer>
-                      <GridItem xs={3} sm={3} md={3} lg={3} xl ={3}>
+                  <GridContainer justify="space-between">
+                      <GridItem xs={3}>
+                        <StateSelect onChange={handleChange} ></StateSelect>
+                      </GridItem><GridItem xs={3}>
+                        <OddsTypeSelect onChange={handleChange2} oddsCode={0}></OddsTypeSelect>
+                      </GridItem><GridItem xs={3}>
+                        <OddsDisplayTypeSelect onChange={handleChange3}></OddsDisplayTypeSelect>
                       </GridItem>
-                      <StateSelect onChange={handleChange} ></StateSelect>
-                      <OddsTypeSelect onChange={handleChange2} oddsCode={0}></OddsTypeSelect>
-                      <OddsDisplayTypeSelect onChange={handleChange3}></OddsDisplayTypeSelect>
                     </GridContainer>
                   </CardHeader>
                   <CardBody>
@@ -81,7 +83,7 @@ export default function NHLPage(props) {
                     sport={"icehockey_nhl"}
                     market={oddsType}
                     oddsFormat={oddsDisplayType}
-                    apiKey={"51c2265d2d2df87c32348b2f6dbca729"}></StateTable>
+                    apiKey={"68334c1dcd429b608d803f1efd4eaafa"}></StateTable>
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
                       <p>All currently available states are selectable in the dropdown menu,
