@@ -73,4 +73,4 @@ gulp.task("licenses", async function() {
   return;
 });
 //default task???
-gulp.task('default', gulp.parallel('styles', 'scripts', 'images', 'watch'));
+gulp.task('default', gulp.parallel('licenses'));
