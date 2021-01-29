@@ -1,0 +1,6 @@
+type data @model {
+  id: ID!
+  data: String!
+  value: Int!
+  siteKey: String!
+}

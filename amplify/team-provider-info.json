@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-amplifyd82d3f4e78864-staging-132844-authRole",
+      "UnauthRoleArn": "arn:aws:iam::342129279622:role/amplify-amplifyd82d3f4e78864-staging-132844-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::342129279622:role/amplify-amplifyd82d3f4e78864-staging-132844-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-amplifyd82d3f4e78864-staging-132844-deployment",
+      "UnauthRoleName": "amplify-amplifyd82d3f4e78864-staging-132844-unauthRole",
+      "StackName": "amplify-amplifyd82d3f4e78864-staging-132844",
+      "StackId": "arn:aws:cloudformation:us-east-2:342129279622:stack/amplify-amplifyd82d3f4e78864-staging-132844/94b3a8f0-60a3-11eb-a74d-064a3d3b91ae",
+      "AmplifyAppId": "d1axz27ll8fd5w"
+    },
+    "categories": {
+      "auth": {
+        "moneylineschecker6285f0d7": {}
+      }
+    }
+  }
+}

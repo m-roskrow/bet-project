@@ -14,13 +14,13 @@
         },
         "betmgm": {
             "include": true,
-            "states": [],
+            "states": ["NJ", "PA", "CO", "IA", "WV", "IN", "TN", "MI", "NV"],
             "link": "examplelink",
             "logoLocation": "assets/imgs/brands/bet-MGM"
         },
         "betrivers": {
             "include": true,
-            "states": [],
+            "states": ["PA", "CO", "IL", "IA", "IN", "MI", "VA"],
             "link": "examplelink",
             "logoLocation": "assets/imgs/brands/bet-rivers"
         },
@@ -44,19 +44,19 @@
         },
         "caesars": {
             "include": true,
-            "states": [],
+            "states": ["NJ", "PA", "IN", "NV"],
             "link": "examplelink",
             "logoLocation": "assets/imgs/brands/caesars"
         },
         "draftkings": {
             "include": true,
-            "states": [],
+            "states": ["NJ", "PA", "CO", "IL", "IA", "WV", "IN", "TN", "MI", "VA", "NH"],
             "link": "examplelink",
             "logoLocation": "assets/imgs/brands/draft-kings"
         },
         "fanduel": {
             "include": true,
-            "states": ["NJ","PA","CO","IL","IA","WV","IN","TN"],
+            "states": ["NJ","PA","CO","IL","IA","WV","IN","TN", "MI", "VA"],
             "link": "examplelink",
             "logoLocation": "assets/imgs/brands/fan-duel"
         },
@@ -86,25 +86,25 @@
         },
         "pointsbetus": {
             "include": true,
-            "states": [],
+            "states": ["NJ", "CO", "IL", "IA", "IN"],
             "link": "examplelink",
             "logoLocation": "assets/imgs/brands/points-bet"
         },
         "sugarhouse": {
             "include": true,
-            "states": [],
+            "states": ["NJ", "PA"],
             "link": "examplelink",
             "logoLocation": "assets/imgs/brands/sugar-house"
         },
         "unibet": {
             "include": true,
-            "states": [],
+            "states": ["NJ", "PA", "IN"],
             "link": "examplelink",
             "logoLocation": "assets/imgs/brands/unibet"
         },
         "williamhill_us": {
             "include": true,
-            "states": [],
+            "states": ["NJ", "CO", "IL", "IA", "WV", "IN", "MI", "NV", "DC"],
             "link": "examplelink",
             "logoLocation": "assets/imgs/brands/william-hill"
         }
