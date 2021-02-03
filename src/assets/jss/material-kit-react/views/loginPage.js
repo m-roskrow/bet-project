@@ -23,7 +23,7 @@ const signupPageStyle = {
     border: "0",
     alignItems: "center",
     "&:before": {
-      background: "rgba(0, 0, 0, 0.5)"
+      background: "#f5f5f5"
     },
     "&:before,&:after": {
       position: "absolute",
@@ -85,6 +85,9 @@ const signupPageStyle = {
   },
   inputIconsColor: {
     color: "#495057"
+  },
+  title: {
+    color: "#000000"
   }
 };
 

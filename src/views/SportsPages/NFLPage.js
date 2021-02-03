@@ -18,9 +18,6 @@ import OddsTypeSelect from "components/Select/OddsTypeSelect.js";
 import OddsDisplayTypeSelect from "components/Select/OddsDisplayTypeSelect";
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
 
-import image from "assets/img/motion-bristol.jpg";
-
-
 const useStyles = makeStyles(styles);
 
 export default function NFLPage(props) {
@@ -41,7 +38,7 @@ export default function NFLPage(props) {
     <div>
       <Header
         absolute
-        color="transparent"
+        color="secondary"
         brand="Money Lines Checker"
         rightLinks={<HeaderLinks />}
         {...rest}
@@ -49,7 +46,6 @@ export default function NFLPage(props) {
       <div
         className={classes.pageHeader}
         style={{
-          backgroundImage: "url(" + image + ")",
           backgroundSize: "cover",
           backgroundPosition: "top center"
         }}
