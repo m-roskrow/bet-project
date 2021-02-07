@@ -70,7 +70,6 @@ function Row(props) {
                     <TableCell>Site</TableCell>
                     <TableCell align="right">{row.team1} Odds</TableCell>
                     <TableCell align="right">{row.team2} Odds</TableCell>
-                    <TableCell align="right">Type</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -82,7 +81,6 @@ function Row(props) {
                         </TableCell>
                         <TableCell align="right">{sitesRow.odds1}</TableCell>
                         <TableCell align="right">{sitesRow.odds2}</TableCell>
-                        <TableCell align="right">{sitesRow.type}</TableCell>
                       </TableRow>
                     </Tooltip>
                   ))}
