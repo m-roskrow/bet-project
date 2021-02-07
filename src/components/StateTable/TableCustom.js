@@ -290,9 +290,8 @@ function updateRows(data, market, state, filter) {
         break;
     }
     
-    if (!sitesArray.length === 0){
-      if (filterCheck (team1, team2, filter)) output.push(createData (team1, bestT1, team2, bestT2, date, sitesArray, bestSiteNice1, bestSiteNice2 ));
-  }}
+    if (filterCheck (team1, team2, filter)) output.push(createData (team1, bestT1, team2, bestT2, date, sitesArray, bestSiteNice1, bestSiteNice2 ));
+  }
   return output;
 }
 
