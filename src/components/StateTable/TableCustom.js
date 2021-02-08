@@ -55,10 +55,10 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row" align="left">{row.date}</TableCell>
-        <TableCell align="left">{row.team1}</TableCell>
-        <TableCell align="left"><BrandCards sportKey={row.bestT1Key} odd={row.bestT1}></BrandCards></TableCell>
-        <TableCell align="left">{row.team2}</TableCell>
-        <TableCell align="right"><BrandCards sportKey={row.bestT2Key} odd={row.bestT2}></BrandCards></TableCell>
+        <TableCell align="center">{row.team1}</TableCell>
+        <TableCell align="center"><BrandCards sportKey={row.bestT1Key} odd={row.bestT1}></BrandCards></TableCell>
+        <TableCell align="center">{row.team2}</TableCell>
+        <TableCell align="center"><BrandCards sportKey={row.bestT2Key} odd={row.bestT2}></BrandCards></TableCell>
       </TableRow>
       <TableRow hover={true}>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -362,10 +362,10 @@ export default function TableCustom(props) {
           <TableRow hover={true}>
             <TableCell />
             <TableCell align="left">Date of Fixture</TableCell>
-            <TableCell align="right">Team 1</TableCell>
-            <TableCell align="right">T1 Best Odds</TableCell>
-            <TableCell align="right">Team 2</TableCell>
-            <TableCell align="right">T2 Best Odds</TableCell>            
+            <TableCell align="center">Team 1</TableCell>
+            <TableCell align="center">T1 Best Odds</TableCell>
+            <TableCell align="center">Team 2</TableCell>
+            <TableCell align="center">T2 Best Odds</TableCell>            
           </TableRow>
         </TableHead>
         <TableBody>

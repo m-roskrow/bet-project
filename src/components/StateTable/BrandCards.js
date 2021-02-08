@@ -9,10 +9,11 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
     root: {
-      maxWidth: 100,
+      maxWidth: 200,
+      maxHeight: 200,
     },
     media: {
-      height: 96,
+      height: 96
     },
   });
 
@@ -36,7 +37,7 @@ function getData(key){
             <a href={"example.com"}>
                 <CardActionArea title={data.siteNice}>
                     <CardMedia className={classes.media} image={data.logoLocation}  title={data.siteNice}></CardMedia>
-                    <CardContent><Typography gutterBottom variant="body2" component="h2">{odd}</Typography></CardContent>
+                    <CardContent><Typography gutterBottom variant="body2" component="h2">{data.siteNice + ": " + odd}</Typography></CardContent>
                 </CardActionArea>
             </a>
         </Card>
