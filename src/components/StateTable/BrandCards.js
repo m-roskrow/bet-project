@@ -34,7 +34,7 @@ function getData(key){
 
     return(
         <Card className={classes.root}>
-            <a href={"example.com"}>
+            <a href={data.link}>
                 <CardActionArea title={data.siteNice}>
                     <CardMedia className={classes.media} image={data.logoLocation}  title={data.siteNice}></CardMedia>
                     <CardContent><Typography gutterBottom variant="body2" component="h2">{data.siteNice + ": " + odd}</Typography></CardContent>

@@ -17,6 +17,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import {v4 as uuidv4} from 'uuid';
 import Tooltip from '@material-ui/core/Tooltip';
 import BrandCards from "./BrandCards.js";
+import MiniBrandCards from './MiniBrandCards.js';
 
 const useRowStyles = makeStyles({
   root: {
@@ -80,9 +81,13 @@ function Row(props) {
                     <Tooltip key={uuidv4()} title={"Last Update: " + sitesRow.updateTime}>
                       <TableRow hover={true}>
                         <TableCell component="th" scope="row">
-                          {sitesRow.site}
+                          <div>
+                          <MiniBrandCards sportKey={sitesRow.siteKey}></MiniBrandCards>
+                          {"   " + sitesRow.site}
+                          </div>
                         </TableCell>
-                        <TableCell align="right">{sitesRow.odds1}</TableCell>
+                        <TableCell align="right">{sitesRow.odds1}
+                          </TableCell>
                         <TableCell align="right">{sitesRow.odds2}</TableCell>
                       </TableRow>
                     </Tooltip>
