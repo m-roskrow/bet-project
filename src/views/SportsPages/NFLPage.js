@@ -38,7 +38,7 @@ export default function NFLPage(props) {
     <div>
       <Header
         absolute
-        color="secondary"
+        color="primary"
         brand="Money Lines Checker"
         rightLinks={<HeaderLinks />}
         {...rest}
@@ -94,7 +94,7 @@ export default function NFLPage(props) {
             </GridItem>
           </GridContainer>
         </div>
-        <Footer whiteFont />
+        <Footer  />
       </div>
     </div>
   );

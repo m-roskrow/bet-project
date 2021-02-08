@@ -17,9 +17,6 @@ import StateTable from "components/StateTable/StateTable.js";
 import OddsTypeSelect from "components/Select/OddsTypeSelect.js";
 import OddsDisplayTypeSelect from "components/Select/OddsDisplayTypeSelect";
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
-
-import image from "assets/img/bg7.jpg";
-
 const useStyles = makeStyles(styles);
 
 export default function NCAABPage(props) {
@@ -40,7 +37,7 @@ export default function NCAABPage(props) {
     <div>
       <Header
         absolute
-        color="transparent"
+        color="primary"
         brand="Money Lines Checker"
         rightLinks={<HeaderLinks />}
         {...rest}
@@ -48,7 +45,6 @@ export default function NCAABPage(props) {
       <div
         className={classes.pageHeader}
         style={{
-          backgroundImage: "url(" + image + ")",
           backgroundSize: "cover",
           backgroundPosition: "top center"
         }}
@@ -96,7 +92,7 @@ export default function NCAABPage(props) {
             </GridItem>
           </GridContainer>
         </div>
-        <Footer whiteFont />
+        <Footer />
       </div>
     </div>
   );

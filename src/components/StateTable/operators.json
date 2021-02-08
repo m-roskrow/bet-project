@@ -4,109 +4,127 @@
             "include": false,
             "states": [],
             "link": "examplelink",
-            "logoLocation": "assets/imgs/brands/bet-online"
+            "logoLocation": "assets/img/brands/bet-online.png",
+            "siteNice": ""
         },
         "betfair": {
             "include": false,
             "states": [],
             "link": "examplelink",
-            "logoLocation": "assets/imgs/brands/betfair"
+            "logoLocation": "assets/img/brands/betfair.png",
+            "siteNice": "BetFair"
         },
         "betmgm": {
             "include": true,
             "states": ["NJ", "PA", "CO", "IA", "WV", "IN", "TN", "MI", "NV"],
             "link": "examplelink",
-            "logoLocation": "assets/imgs/brands/bet-MGM"
+            "logoLocation": "https://res.cloudinary.com/moneylineschecker/image/upload/v1612791933/brands/bet-mgm_sjpc66.png",
+            "siteNice": "Bet MGM"
         },
         "betrivers": {
             "include": true,
             "states": ["PA", "CO", "IL", "IA", "IN", "MI", "VA"],
             "link": "examplelink",
-            "logoLocation": "assets/imgs/brands/bet-rivers"
+            "logoLocation": "https://res.cloudinary.com/moneylineschecker/image/upload/v1612791933/brands/bet-rivers_tdovgq.png",
+            "siteNice": "BetRivers"
         },
         "bookmaker": {
             "include": false,
             "states": [],
             "link": "examplelink",
-            "logoLocation": "assets/imgs/brands/bookmaker-eu"
+            "logoLocation": "assets/img/brands/bookmaker-eu.png",
+            "siteNice": ""
         },
         "bogata": {
             "include": true,
             "states": [],
             "link": "examplelink",
-            "logoLocation": "assets/imgs/brands/bogata"
+            "logoLocation": "assets/img/brands/bogata.png",
+            "siteNice": ""
         },
         "bovada": {
             "include": false,
             "states": [],
             "link": "examplelink",
-            "logoLocation": "assets/imgs/brands/bovada"
+            "logoLocation": "assets/img/brands/bovada.png",
+            "siteNice": ""
         },
         "caesars": {
             "include": true,
             "states": ["NJ", "PA", "IN", "NV"],
             "link": "examplelink",
-            "logoLocation": "assets/imgs/brands/caesars"
+            "logoLocation": "https://res.cloudinary.com/moneylineschecker/image/upload/v1612791933/brands/caesars_yhl56f.png",
+            "siteNice": "Caesars"
         },
         "draftkings": {
             "include": true,
             "states": ["NJ", "PA", "CO", "IL", "IA", "WV", "IN", "TN", "MI", "VA", "NH"],
             "link": "examplelink",
-            "logoLocation": "assets/imgs/brands/draft-kings"
+            "logoLocation": "https://res.cloudinary.com/moneylineschecker/image/upload/v1612791934/brands/draft-kings_xjnkv8.png",
+            "siteNice": "Draft Kings"
         },
         "fanduel": {
             "include": true,
             "states": ["NJ","PA","CO","IL","IA","WV","IN","TN", "MI", "VA"],
             "link": "examplelink",
-            "logoLocation": "assets/imgs/brands/fan-duel"
+            "logoLocation": "https://res.cloudinary.com/moneylineschecker/image/upload/v1612791933/brands/fanduel_tzmv8j.png",
+            "siteNice": "FanDuel"
         },
         "gtbets": {
             "include": false,
             "states": [],
             "link": "examplelink",
-            "logoLocation": "assets/imgs/brands/GT-bets"
+            "logoLocation": "assets/img/brands/GT-bets.png",
+            "siteNice": ""
         },
         "intertops": {
             "include": false,
             "states": [],
             "link": "examplelink",
-            "logoLocation": "assets/imgs/brands/intertops"
+            "logoLocation": "assets/img/brands/intertops.png",
+            "siteNice": ""
         },
         "lowvig": {
             "include": false,
             "states": [],
             "link": "examplelink",
-            "logoLocation": "assets/imgs/brands/low-wig"
+            "logoLocation": "assets/img/brands/low-wig.png",
+            "siteNice": ""
         },
         "mybookieag": {
             "include": false,
             "states": [],
             "link": "examplelink",
-            "logoLocation": "assets/imgs/brands/my-bookie"
+            "logoLocation": "assets/img/brands/my-bookie.png",
+            "siteNice": ""
         },
         "pointsbetus": {
             "include": true,
             "states": ["NJ", "CO", "IL", "IA", "IN"],
             "link": "examplelink",
-            "logoLocation": "assets/imgs/brands/points-bet"
+            "logoLocation": "https://res.cloudinary.com/moneylineschecker/image/upload/v1612791933/brands/points-bet_ksmhhj.jpg",
+            "siteNice": "PointsBet USA"
         },
         "sugarhouse": {
             "include": true,
             "states": ["NJ", "PA"],
             "link": "examplelink",
-            "logoLocation": "assets/imgs/brands/sugar-house"
+            "logoLocation": "assets/img/brands/sugar-house.png",
+            "siteNice": "Sugarhouse"
         },
         "unibet": {
             "include": true,
             "states": ["NJ", "PA", "IN"],
             "link": "examplelink",
-            "logoLocation": "assets/imgs/brands/unibet"
+            "logoLocation": "https://res.cloudinary.com/moneylineschecker/image/upload/v1612791933/brands/unibet_nuj9ln.png",
+            "siteNice": "UniBet"
         },
         "williamhill_us": {
             "include": true,
             "states": ["NJ", "CO", "IL", "IA", "WV", "IN", "MI", "NV", "DC"],
             "link": "examplelink",
-            "logoLocation": "assets/imgs/brands/william-hill"
+            "logoLocation": "https://res.cloudinary.com/moneylineschecker/image/upload/v1612791933/brands/william-hill_tpezj2.png",
+            "siteNice": "William Hill US"
         }
     }
 }

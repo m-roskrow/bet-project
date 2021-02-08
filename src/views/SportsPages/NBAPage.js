@@ -40,7 +40,7 @@ export default function NBAPage(props) {
     <div>
       <Header
         absolute
-        color="transparent"
+        color="primary"
         brand="Money Lines Checker"
         rightLinks={<HeaderLinks />}
         {...rest}
@@ -96,7 +96,7 @@ export default function NBAPage(props) {
             </GridItem>
           </GridContainer>
         </div>
-        <Footer whiteFont />
+        <Footer  />
       </div>
     </div>
   );
