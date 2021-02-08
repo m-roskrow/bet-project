@@ -16,6 +16,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import {v4 as uuidv4} from 'uuid';
 import Tooltip from '@material-ui/core/Tooltip';
+import BrandCards from "./BrandCards.js";
 
 const useRowStyles = makeStyles({
   root: {
@@ -25,7 +26,7 @@ const useRowStyles = makeStyles({
   },
 });
 
-function createData(team1, bestT1, team2, bestT2, date, sites, bestSites1, bestSites2) {
+function createData(team1, bestT1, team2, bestT2, date, sites, bestSites1, bestSites2, bestT1Key, bestT2Key) {
   return {
     team1,
     bestT1,
@@ -35,6 +36,8 @@ function createData(team1, bestT1, team2, bestT2, date, sites, bestSites1, bestS
     sites,
     bestSites1,
     bestSites2,
+    bestT1Key,
+    bestT2Key
   };
 }
 
@@ -53,9 +56,9 @@ function Row(props) {
         </TableCell>
         <TableCell component="th" scope="row" align="left">{row.date}</TableCell>
         <TableCell align="left">{row.team1}</TableCell>
-        <TableCell align="left">{row.bestT1} at: {row.bestSites1}</TableCell>
+        <TableCell align="left"><BrandCards sportKey={row.bestT1Key} odd={row.bestT1}></BrandCards></TableCell>
         <TableCell align="left">{row.team2}</TableCell>
-        <TableCell align="right">{row.bestT2} at: {row.bestSites2}</TableCell>
+        <TableCell align="right"><BrandCards sportKey={row.bestT2Key} odd={row.bestT2}></BrandCards></TableCell>
       </TableRow>
       <TableRow hover={true}>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -252,7 +255,8 @@ function updateRows(data, market, state, filter) {
         const tempTime = data.data[i].sites[j].last_update;
         const updateTime = tempTime.substring(0, 10) + " " + tempTime.substring(11,19) + " GMT"
         /* check operator / state combination is supported */
-        
+        if (oddsT1 === -999999) oddsT1 = "unavailable";
+        if (oddsT2 === -999999) oddsT2 = "unavailable";
         sitesArray.push({site: siteName, odds1: oddsT1, odds2: oddsT2, type: oddsType, updateTime: updateTime, siteKey: siteKey});
         }
       }
@@ -266,6 +270,9 @@ function updateRows(data, market, state, filter) {
       if (z===0) bestSiteNice2 = (data.data[i].sites[bestIndex2[z]].site_nice) 
       else bestSiteNice2 = bestSiteNice2 + ", " + (data.data[i].sites[bestIndex2[z]].site_nice);
     }
+    // handling for games where we do not support any of the odds providers
+    if (bestIndex1.length === 0) {bestSiteNice1 = "N/A"; bestT1 = "no odds data";};
+    if (bestIndex2.length === 0) {bestSiteNice2 = "N/A"; bestT2 = "no odds data";};
     bestSitesArray1.push(bestSiteNice1);
     bestSitesArray2.push(bestSiteNice2);
     // handling to represent odds in a legible way depending on type
@@ -287,8 +294,10 @@ function updateRows(data, market, state, filter) {
         bestT2 = bestT2.toString();
         break;
     }
+    const bestT1Key = data.data[i].sites[bestIndex1[0]].site_key;
+    const bestT2Key = data.data[i].sites[bestIndex2[0]].site_key;
     
-    if (filterCheck (team1, team2, filter)) output.push(createData (team1, bestT1, team2, bestT2, date, sitesArray, bestSiteNice1, bestSiteNice2 ));
+    if (filterCheck (team1, team2, filter)) output.push(createData (team1, bestT1, team2, bestT2, date, sitesArray, bestSiteNice1, bestSiteNice2, bestT1Key, bestT2Key));
   }
   return output;
 }
@@ -296,7 +305,7 @@ function updateRows(data, market, state, filter) {
 /* check if bet operator / state combo is supported in operators.json */
 function opStateCheck(key, state){
   var opData = (require('./operators.json'));
-  if (opData.operators[key] === undefined || !opData.operators[key].include) return false
+  if (opData.operators[key] === undefined || !opData.operators[key].include) return false;
   else if (opData.operators[key].states.length === 0){
     console.log("err no states in state table for: " + key);
     return false
@@ -306,6 +315,7 @@ function opStateCheck(key, state){
   }
   return false
 }
+
 
 //check if row viable for adding to table according to team filter (supplied from parent component StateTable.js)
 function filterCheck(team1, team2, filter){
