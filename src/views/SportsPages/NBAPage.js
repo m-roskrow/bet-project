@@ -17,7 +17,7 @@ import StateTable from "components/StateTable/StateTable.js";
 import OddsTypeSelect from "components/Select/OddsTypeSelect.js";
 import OddsDisplayTypeSelect from "components/Select/OddsDisplayTypeSelect";
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
-
+import TableNav from "components/StateTable/TableNav.js";
 import image from "assets/img/bg7.jpg";
 
 const useStyles = makeStyles(styles);
@@ -54,18 +54,19 @@ export default function NBAPage(props) {
         }}
       >
         <div className={classes.container}>
-          <GridContainer justify="center">
+          <GridContainer align="center" justify="center">
+          <GridItem><TableNav currentSport={"nba"}></TableNav></GridItem>
           <GridItem >
               <div className={classes.brand}>
                 <h1  className={classes.title}>NBA Fixtures</h1>
-                <b></b>
+                <br></br>
               </div>
             </GridItem>
-            <GridItem xs={12} sm={12} md={12} lg={12} xl ={12}>
+            <GridItem align="left" xs={12} sm={12} md={12} lg={12} xl ={12}>
               <Card className={classes[cardAnimaton]}>
                 <form className={classes.form}>
                   <CardHeader color="info" className={classes.cardHeader} >
-                  <GridContainer justify="space-between">
+                  <GridContainer justify="flex-start" align="left">
                       <GridItem xs={3}>
                         <StateSelect onChange={handleChange} ></StateSelect>
                       </GridItem><GridItem xs={3}>

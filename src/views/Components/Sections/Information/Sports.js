@@ -35,7 +35,7 @@ const createNewsCards = (sport, indexStart) => {
 
 const useStyles = makeStyles(styles);
 
-export default function SectionPills() {
+export default function Sports() {
   const classes = useStyles();
   return (
     <div className={classes.section}>
