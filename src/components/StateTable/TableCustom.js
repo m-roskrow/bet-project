@@ -299,8 +299,10 @@ function updateRows(data, market, state, filter) {
         bestT2 = bestT2.toString();
         break;
     }
-    const bestT1Key = data.data[i].sites[bestIndex1[0]].site_key;
-    const bestT2Key = data.data[i].sites[bestIndex2[0]].site_key;
+    var bestT1Key;
+    var bestT2Key;
+    bestIndex1.length !== 0 ? bestT1Key = data.data[i].sites[bestIndex1[0]].site_key : bestT1Key = "noKey"
+    bestIndex2.length !== 0 ? bestT2Key = data.data[i].sites[bestIndex2[0]].site_key : bestT2Key = "noKey"
     
     if (filterCheck (team1, team2, filter)) output.push(createData (team1, bestT1, team2, bestT2, date, sitesArray, bestSiteNice1, bestSiteNice2, bestT1Key, bestT2Key));
   }

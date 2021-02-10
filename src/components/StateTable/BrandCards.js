@@ -19,8 +19,9 @@ const useStyles = makeStyles({
 
 // return string of file location of brand image given the brand's "key"
 function getData(key){
+    
     var opData = (require('./operators.json'));
-    if (opData.operators[key] === undefined || !opData.operators[key].include) return '{}';
+    if (opData.operators[key] === undefined  || !opData.operators[key].include) return ({siteNice: "No Available Odds", logoLocation: "https://res.cloudinary.com/moneylineschecker/image/upload/v1612956222/brands/error-image-generic_hqdx9g.png"});
     else {
     return(opData.operators[key])
     };
