@@ -19,6 +19,7 @@
             "states": ["NJ", "PA", "CO", "IA", "WV", "IN", "TN", "MI", "NV"],
             "link": "examplelink",
             "logoLocation": "https://res.cloudinary.com/moneylineschecker/image/upload/v1612791933/brands/bet-mgm_sjpc66.png",
+            "logoLarge": "https://scmedia.nj.betmgm.com/$-$/f7c2eab99818481bafc68590d279f3ea.svg",
             "siteNice": "Bet MGM"
         },
         "betrivers": {
@@ -26,6 +27,7 @@
             "states": ["PA", "CO", "IL", "IA", "IN", "MI", "VA"],
             "link": "examplelink",
             "logoLocation": "https://res.cloudinary.com/moneylineschecker/image/upload/v1612791933/brands/bet-rivers_tdovgq.png",
+            "logoLarge": "https://www.betrivers.com/assets/img/betrivers_logo.png",
             "siteNice": "BetRivers"
         },
         "bookmaker": {
@@ -54,6 +56,7 @@
             "states": ["NJ", "PA", "IN", "NV"],
             "link": "examplelink",
             "logoLocation": "https://res.cloudinary.com/moneylineschecker/image/upload/v1612791933/brands/caesars_yhl56f.png",
+            "logoLarge": "https://www.caesarscasino.com/media/filer_public/cc/da/ccdad524-07b0-4c9d-9c5e-f0e442c0a8c6/ccs-nj-horizontal_1.png",
             "siteNice": "Caesars"
         },
         "draftkings": {
@@ -61,6 +64,7 @@
             "states": ["NJ", "PA", "CO", "IL", "IA", "WV", "IN", "TN", "MI", "VA", "NH"],
             "link": "examplelink",
             "logoLocation": "https://res.cloudinary.com/moneylineschecker/image/upload/v1612791934/brands/draft-kings_xjnkv8.png",
+            "logoLarge": "https://d2tjpz01y5bfgl.cloudfront.net/sportsbook_transparent.png",
             "siteNice": "Draft Kings"
         },
         "fanduel": {
@@ -68,6 +72,7 @@
             "states": ["NJ","PA","CO","IL","IA","WV","IN","TN", "MI", "VA"],
             "link": "examplelink",
             "logoLocation": "https://res.cloudinary.com/moneylineschecker/image/upload/v1612791933/brands/fanduel_tzmv8j.png",
+            "logoLarge": "https://sportsbook.fanduel.com/static/img/fanduel-logo.a2d7df3.svg",
             "siteNice": "FanDuel"
         },
         "gtbets": {
@@ -103,6 +108,7 @@
             "states": ["NJ", "CO", "IL", "IA", "IN"],
             "link": "examplelink",
             "logoLocation": "https://res.cloudinary.com/moneylineschecker/image/upload/v1612791933/brands/points-bet_ksmhhj.jpg",
+            "logoLarge": "https://d9hhrg4mnvzow.cloudfront.net/join.pointsbet.com/illinois/eb249a69-asset-1-4x_109i02e000000000000028.png",
             "siteNice": "PointsBet USA"
         },
         "sugarhouse": {
@@ -117,6 +123,7 @@
             "states": ["NJ", "PA", "IN"],
             "link": "examplelink",
             "logoLocation": "https://res.cloudinary.com/moneylineschecker/image/upload/v1612791933/brands/unibet_nuj9ln.png",
+            "logoLarge": "https://nj.unibet.com/media/filer_public/df/56/df5684af-69cc-47c9-b7c3-c23074f04715/unibet-logo-for-black-bg.svg",
             "siteNice": "UniBet"
         },
         "williamhill_us": {
@@ -124,6 +131,7 @@
             "states": ["NJ", "CO", "IL", "IA", "WV", "IN", "MI", "NV", "DC"],
             "link": "examplelink",
             "logoLocation": "https://res.cloudinary.com/moneylineschecker/image/upload/v1612791933/brands/william-hill_tpezj2.png",
+            "logoLarge": "https://www.williamhill.com/us/static/images/welcome/il/IL_WH_GVC_Logo.png",
             "siteNice": "William Hill US"
         }
     }

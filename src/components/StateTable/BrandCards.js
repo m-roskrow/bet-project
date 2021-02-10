@@ -10,10 +10,13 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles({
     root: {
       maxWidth: 200,
-      maxHeight: 200,
+      maxHeight: 100,
+      
     },
     media: {
-      height: 96
+      height: 50,
+      width: 200,
+      backgroundColor: "black",
     },
   });
 
@@ -21,7 +24,7 @@ const useStyles = makeStyles({
 function getData(key){
     
     var opData = (require('./operators.json'));
-    if (opData.operators[key] === undefined  || !opData.operators[key].include) return ({siteNice: "No Available Odds", logoLocation: "https://res.cloudinary.com/moneylineschecker/image/upload/v1612956222/brands/error-image-generic_hqdx9g.png"});
+    if (opData.operators[key] === undefined  || !opData.operators[key].include) return ({siteNice: "No Available Odds", logoLarge: "https://res.cloudinary.com/moneylineschecker/image/upload/v1612956222/brands/error-image-generic_hqdx9g.png"});
     else {
     return(opData.operators[key])
     };
@@ -36,8 +39,8 @@ function getData(key){
     return(
         <Card className={classes.root}>
             <a href={data.link}>
-                <CardActionArea title={data.siteNice}>
-                    <CardMedia className={classes.media} image={data.logoLocation}  title={data.siteNice}></CardMedia>
+                <CardActionArea  title={data.siteNice}>
+                    <CardMedia className={classes.media} image={data.logoLarge}  title={data.siteNice}></CardMedia>
                     <CardContent><Typography gutterBottom variant="body2" component="h2">{data.siteNice + ": " + odd}</Typography></CardContent>
                 </CardActionArea>
             </a>
