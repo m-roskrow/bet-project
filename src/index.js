@@ -27,6 +27,7 @@ ReactDOM.render(
       <Route path="/ncaab-odds" component={NCAABPage} />
       <Route path="/about-us" component={AboutUs} />
       <Route path="/legal" component={TextPageSetup} />
+      <Route path="/help" component={TextPageSetup} />
     </Switch>
   </Router>,
   document.getElementById("root")

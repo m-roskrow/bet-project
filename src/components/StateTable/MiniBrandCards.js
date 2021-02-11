@@ -29,6 +29,7 @@ function getData(key){
         <img 
   style={{width: 30, height: 30, borderRadius: 60/ 2}} 
   src= {data.logoLocation}
+  alt= "error"
 />
     )
   }

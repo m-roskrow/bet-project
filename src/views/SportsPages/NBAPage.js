@@ -83,7 +83,7 @@ export default function NBAPage(props) {
                     sport={"basketball_nba"}
                     market={oddsType}
                     oddsFormat={oddsDisplayType}
-                    apiKey={"68334c1dcd429b608d803f1efd4eaafa"}></StateTable>
+                    apiKey={"51c2265d2d2df87c32348b2f6dbca729"}></StateTable>
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
                       <p>All currently available states are selectable in the dropdown menu,

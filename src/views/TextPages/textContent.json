@@ -5,5 +5,12 @@
     "body": ["body1 body1 body1 body1 body1 body1 body1 body1 body1 body1 body1 body1 body1 body1 body1 body1 body1 body1 body1 body1 body1 body1 body1 body1 body1 body1 body1 ",
     "body 2 body 2 body 2 body 2 body 2 body 2 body 2 body 2 body 2 body 2 body 2 body 2 body 2 body 2 body 2 body 2 "],
     "complete": true
+},
+"help": {
+    "title": "Help",
+    "title_desc": "If you have any further queries, please use the 'Contact Us' button at the bottom of the page and send us an email with you question.",
+    "body_headers": ["What is Money Lines Checker?", "How to use Money Lines Checker"],
+    "body": ["Money Lines Checker is an odds comparison site - this means that we compile the odds of various sports betting operators in order to provide you, the customer with the opportunity to make the most savvy bets possible.",
+    "In order to access the odds tables, click the 'Odds Tables' button at the top of the page, then select the sport you wish to see odds for. If your sport is not yet supported, please feel free to contact us and we will work to add it to the site. Once on the Odds Table pages, you can select the State you wish to place a bet from, and we will show you which operators have the relevant permissions to place a bet in said State."]
 }
 }

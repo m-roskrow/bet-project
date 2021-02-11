@@ -36,7 +36,7 @@ import GameSearch from 'components/Select/GameSearch.js';
             <p>Click an arrow next to a fixture to show all available odds for that fixture. To filter by team use the search box below.</p>
             <GameSearch onChange={handleChangeSearch}></GameSearch>  
           </div>
-        <TableCustom data={data} sportType={sportType} market={market} state={state} filter={filter}></TableCustom>
+        <TableCustom data={data} sportType={sportType} market={market} state={state} filter={filter} oddsFormat={oddsFormat}></TableCustom>
         </div>
         );
 }

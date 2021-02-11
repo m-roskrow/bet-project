@@ -27,7 +27,7 @@ const useRowStyles = makeStyles({
   },
 });
 
-function createData(team1, bestT1, team2, bestT2, date, sites, bestSites1, bestSites2, bestT1Key, bestT2Key) {
+function createData(team1, bestT1, team2, bestT2, date, sites, bestSites1, bestSites2, bestT1Key, bestT2Key, bestPercentage1, bestPercentage2) {
   return {
     team1,
     bestT1,
@@ -39,6 +39,8 @@ function createData(team1, bestT1, team2, bestT2, date, sites, bestSites1, bestS
     bestSites2,
     bestT1Key,
     bestT2Key,
+    bestPercentage1,
+    bestPercentage2,
   };
 }
 
@@ -57,9 +59,9 @@ function Row(props) {
         </TableCell>
         <TableCell component="th" scope="row" align="left">{row.date}</TableCell>
         <TableCell align="center">{row.team1}</TableCell>
-        <TableCell align="center"><BrandCards sportKey={row.bestT1Key} odd={row.bestT1}></BrandCards></TableCell>
+        <TableCell align="center"><BrandCards sportKey={row.bestT1Key} odd={row.bestPercentage1 + "   " + row.bestT1}></BrandCards></TableCell>
         <TableCell align="center">{row.team2}</TableCell>
-        <TableCell align="center"><BrandCards sportKey={row.bestT2Key} odd={row.bestT2}></BrandCards></TableCell>
+        <TableCell align="center"><BrandCards sportKey={row.bestT2Key} odd={row.bestPercentage2 + "   " + row.bestT2}></BrandCards></TableCell>
       </TableRow>
       <TableRow hover={true}>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -153,6 +155,8 @@ function updateRows(data, market, state, filter, oddsFormat) {
     var bestT2Arr = ["under", -1, 0];
     var bestIndex1 = [];
     var bestIndex2 = [];
+    var oddsPercentage1;
+    var oddsPercentage2;
     for (var j = 0; j < numSites; j++){
       const siteKey = (data.data[i].sites[j].site_key);
       if (opStateCheck(siteKey, state)) {
@@ -183,6 +187,8 @@ function updateRows(data, market, state, filter, oddsFormat) {
                 bestT2 = tempT2;}
               else if (tempT2 === bestT2){
                 bestIndex2.push(j);}
+              oddsPercentage1 = convertToProb(oddsFormat, data.data[i].sites[j].odds.h2h[0]);
+              oddsPercentage2 = convertToProb(oddsFormat, data.data[i].sites[j].odds.h2h[1]);
             }
             catch(err) {
               oddsT1 = "unavailable";
@@ -209,6 +215,8 @@ function updateRows(data, market, state, filter, oddsFormat) {
                 bestIndex2 = [j];
                 bestT2Arr = tempT2;
               }
+              oddsPercentage1 = convertToProb(oddsFormat, data.data[i].sites[j].odds.totals.odds[0]);
+              oddsPercentage2 = convertToProb(oddsFormat, data.data[i].sites[j].odds.totals.odds[1]);
             }
             catch(err) {
               console.log(err);
@@ -247,6 +255,8 @@ function updateRows(data, market, state, filter, oddsFormat) {
                 bestIndex2 = [j];
                 bestT2Arr = tempT2;
               }
+              oddsPercentage1 = convertToProb(oddsFormat, data.data[i].sites[j].odds.spreads.odds[0]);
+              oddsPercentage2 = convertToProb(oddsFormat, data.data[i].sites[j].odds.spreads.odds[1]);
             }
             catch(err) {
               oddsT1 = "unavailable";
@@ -264,8 +274,7 @@ function updateRows(data, market, state, filter, oddsFormat) {
         /* check operator / state combination is supported */
         if (oddsT1 === -999999) oddsT1 = "unavailable";
         if (oddsT2 === -999999) oddsT2 = "unavailable";
-        const oddsPercentage1 = convertToProb(oddsFormat, Number(oddsT1));
-        const oddsPercentage2 = convertToProb(oddsFormat, Number(oddsT2));
+
         sitesArray.push({site: siteName, odds1: oddsT1, odds2: oddsT2, type: oddsType, updateTime: updateTime, siteKey: siteKey, oddsPercentage1: oddsPercentage1, oddsPercentage2: oddsPercentage2});
         }
       }
@@ -284,18 +293,26 @@ function updateRows(data, market, state, filter, oddsFormat) {
     if (bestIndex2.length === 0) {bestSiteNice2 = "N/A"; bestT2 = "no odds data";};
     bestSitesArray1.push(bestSiteNice1);
     bestSitesArray2.push(bestSiteNice2);
+    var bestPercentage1;
+    var bestPercentage2;
     // handling to represent odds in a legible way depending on type
     switch(market){
       case ("h2h"): 
+        bestPercentage1 = convertToProb(oddsFormat, bestT1);
         bestT1 = bestT1.toString();
+        bestPercentage2 = convertToProb(oddsFormat, bestT2);
         bestT2 = bestT2.toString();
         break;
       case ("totals"):
+        bestPercentage1 = convertToProb(oddsFormat, bestT1Arr[2]);
         bestT1 = bestT1Arr[0] + " " + bestT1Arr[1].toString() + ": " + bestT1Arr[2].toString();
+        bestPercentage2 = convertToProb(oddsFormat, bestT2Arr[2]);
         bestT2 = bestT2Arr[0] + " " + bestT2Arr[1].toString() + ": " + bestT2Arr[2].toString();
         break;
       case ("spreads"):
+        bestPercentage1 = convertToProb(oddsFormat, bestT1Arr[1]);
         bestT1 = bestT1Arr[0] + ", " + bestT1Arr[1];
+        bestPercentage2 = convertToProb(oddsFormat, bestT2Arr[1]);
         bestT2 = bestT2Arr[0] + ", " + bestT2Arr[1];
         break;
       default:
@@ -307,7 +324,7 @@ function updateRows(data, market, state, filter, oddsFormat) {
     var bestT2Key;
     bestIndex1.length !== 0 ? bestT1Key = data.data[i].sites[bestIndex1[0]].site_key : bestT1Key = "noKey"
     bestIndex2.length !== 0 ? bestT2Key = data.data[i].sites[bestIndex2[0]].site_key : bestT2Key = "noKey"
-    if (filterCheck (team1, team2, filter)) output.push(createData (team1, bestT1, team2, bestT2, date, sitesArray, bestSiteNice1, bestSiteNice2, bestT1Key, bestT2Key));
+    if (filterCheck (team1, team2, filter)) output.push(createData (team1, bestT1, team2, bestT2, date, sitesArray, bestSiteNice1, bestSiteNice2, bestT1Key, bestT2Key, bestPercentage1, bestPercentage2));
   }
   return output;
 }
