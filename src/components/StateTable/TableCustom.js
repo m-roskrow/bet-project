@@ -38,7 +38,7 @@ function createData(team1, bestT1, team2, bestT2, date, sites, bestSites1, bestS
     bestSites1,
     bestSites2,
     bestT1Key,
-    bestT2Key
+    bestT2Key,
   };
 }
 
@@ -86,9 +86,9 @@ function Row(props) {
                           {"   " + sitesRow.site}
                           </div>
                         </TableCell>
-                        <TableCell align="right">{sitesRow.odds1}
+                        <TableCell align="right">{sitesRow.oddsPercentage1 + "   " + sitesRow.odds1}
                           </TableCell>
-                        <TableCell align="right">{sitesRow.odds2}</TableCell>
+                        <TableCell align="right">{sitesRow.oddsPercentage2 + "   " + sitesRow.odds2}</TableCell>
                       </TableRow>
                     </Tooltip>
                   ))}
@@ -116,7 +116,9 @@ Row.propTypes = {
         odds2: PropTypes.string.isRequired,
         type: PropTypes.string.isRequired,
         updateTime: PropTypes.string.isRequired,
-        siteKey: PropTypes.string.isRequired
+        siteKey: PropTypes.string.isRequired,
+        oddsPercentage1: PropTypes.string.isRequired,
+        oddsPercentage2: PropTypes.string.isRequired,
       }),
     ).isRequired,
   }).isRequired,
@@ -125,7 +127,7 @@ Row.propTypes = {
 
 /* function which generates the tabular data from the input data taken from the-odds-api*/
 /* */
-function updateRows(data, market, state, filter) {
+function updateRows(data, market, state, filter, oddsFormat) {
   
   const numGames = data.data.length;
   const output = [];
@@ -262,7 +264,9 @@ function updateRows(data, market, state, filter) {
         /* check operator / state combination is supported */
         if (oddsT1 === -999999) oddsT1 = "unavailable";
         if (oddsT2 === -999999) oddsT2 = "unavailable";
-        sitesArray.push({site: siteName, odds1: oddsT1, odds2: oddsT2, type: oddsType, updateTime: updateTime, siteKey: siteKey});
+        const oddsPercentage1 = convertToProb(oddsFormat, Number(oddsT1));
+        const oddsPercentage2 = convertToProb(oddsFormat, Number(oddsT2));
+        sitesArray.push({site: siteName, odds1: oddsT1, odds2: oddsT2, type: oddsType, updateTime: updateTime, siteKey: siteKey, oddsPercentage1: oddsPercentage1, oddsPercentage2: oddsPercentage2});
         }
       }
     var bestSiteNice1 = "";
@@ -303,7 +307,6 @@ function updateRows(data, market, state, filter) {
     var bestT2Key;
     bestIndex1.length !== 0 ? bestT1Key = data.data[i].sites[bestIndex1[0]].site_key : bestT1Key = "noKey"
     bestIndex2.length !== 0 ? bestT2Key = data.data[i].sites[bestIndex2[0]].site_key : bestT2Key = "noKey"
-    
     if (filterCheck (team1, team2, filter)) output.push(createData (team1, bestT1, team2, bestT2, date, sitesArray, bestSiteNice1, bestSiteNice2, bestT1Key, bestT2Key));
   }
   return output;
@@ -343,25 +346,45 @@ function filterCheck(team1, team2, filter){
   };
 }
 
+// convert odds to percentage probability given by that operator
+function convertToProb (oddsFormat, odd){
+  if (oddsFormat === "american"){
+    if (odd > 0){
+      var temp = 1+(odd/100);
+      temp = Math.round(100-((temp-1)/(temp) * 100));
+      return (temp + "%");}
+    else {
+      var temp = (1-(100/odd));
+      temp = Math.round(100-((temp-1)/(temp) * 100));
+      return (temp + "%");}
+  }
+  else if (oddsFormat === "decimal") {
+    var temp = Math.round(100-((odd-1)/(odd) * 100));
+    return (temp + "%");
+  }
+  else return ("Odd Format not supported");
+}
 
 export default function TableCustom(props) {
   const [data, setData] = React.useState(props.data);
   const [state, setState] = React.useState(props.state);
   const [market, setMarket] = React.useState(props.market);
   const [filter, setFilter] = React.useState(props.filter);
+  const [oddsFormat, setOddsFormat] = React.useState(props.oddsFormat);
   /*update props on change */
   const updateProps = (newProps) => 
         {setMarket(newProps.market); 
         setData(newProps.data); 
         setState(newProps.state);
-        setFilter(newProps.filter);}
+        setFilter(newProps.filter);
+        setOddsFormat(newProps.oddsFormat);}
 
   React.useEffect(() => 
       updateProps(props),
       [props.state, props.data, props.market, props.filter]
     );
   
-  const rows = updateRows(data, market, state, filter);
+  const rows = updateRows(data, market, state, filter, oddsFormat);
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
