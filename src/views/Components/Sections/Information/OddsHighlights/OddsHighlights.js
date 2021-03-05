@@ -2,7 +2,6 @@ import React from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // core components
-import useAxios from 'axios-hooks';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
@@ -10,10 +9,11 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import GridItem from "components/Grid/GridItem";
 import GridContainer from "components/Grid/GridContainer";
+import example from "assets/img/profile.jpg"
 
   const useStyles = makeStyles({
     root: {
-      maxWidth: 400,
+      maxWidth: window.innerWidth/3,
     },
     media: {
       height: 150,
@@ -34,34 +34,21 @@ import GridContainer from "components/Grid/GridContainer";
    
       
     return (
-        <div>
-        <GridContainer>
-            <GridItem xs={12} justify="center">
-                <Typography variant = "h4" align="center">Highlighted Odds</Typography>
-            </GridItem>
-        </GridContainer>
-        <GridContainer>
-                
-        </GridContainer>
-        <GridContainer>
-            <GridItem xs={4}>
+
                 <Card className={classes.root}>
                     <a href="something">
                         <CardActionArea title={sport}>
-                            <CardMedia className={classes.media} image={""} ></CardMedia>
-                            <CardContent><Typography gutterBottom variant="body2" component="h2">
+                            <CardMedia className={classes.media} image={example} ></CardMedia>
+                            <CardContent><Typography gutterBottom variant="body1" component="h2">
                                 hello
                                 </Typography>
-                                <Typography variant="body3" color="textSecondary" component="p">
+                                <Typography variant="body" color="textSecondary" component="p">
                                 there
                                 </Typography>
                             </CardContent>
                         </CardActionArea>
                     </a>
                 </Card>
-            </GridItem>
-        </GridContainer>
-        </div>
               );
       }
       

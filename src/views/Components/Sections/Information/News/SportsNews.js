@@ -10,7 +10,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import GridItem from "components/Grid/GridItem";
 
-
+// no longer using this component
 const getDate = () => {
   var today = new Date();
   var dd = today.getDate();

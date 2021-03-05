@@ -21,13 +21,32 @@ import GameSearch from 'components/Select/GameSearch.js';
       updateProps(props),
       [props.market, props.oddsFormat, props.state]
     );
-
+   // https://fxe3hhzmk9.execute-api.us-east-2.amazonaws.com/beta/odd - API link to request in format {sport, region, market, oddsFormat}
     const apiLink = "https://api.the-odds-api.com/v3/odds/?sport=" + sport + "&region=" + region + "&mkt=" + market + "&dateFormat=iso&oddsFormat=" + oddsFormat + "&apiKey=" + apiKey;
     const [{ data, loading, error }, refetch] = useAxios(
-      apiLink
+      apiLink, {method: "POST"}, 
     )
     if (loading) {console.log("API loaded"); return <p>Loading...</p>}
     if (error) return <p>Error fetching API data!</p>
+    const axios = require('axios')
+
+      var url = "https://fxe3hhzmk9.execute-api.us-east-2.amazonaws.com/beta/odd";
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", url);
+      xhr.withCredentials = false;
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            console.log(xhr.status);
+            console.log((xhr.responseText));
+        }};
+      
+      var data2 = JSON.stringify({sport: sport, region: region, market: market, oddsFormat: oddsFormat});
+      console.log (data2)
+      
+      xhr.send(data2);
+    
     const handleChangeSearch = (newValue) => {setFilter(newValue);};
    
     return (

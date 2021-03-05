@@ -18,7 +18,6 @@ import OddsTypeSelect from "components/Select/OddsTypeSelect.js";
 import OddsDisplayTypeSelect from "components/Select/OddsDisplayTypeSelect";
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
 import TableNav from "components/StateTable/TableNav.js";
-import image from "assets/img/bg7.jpg";
 
 const useStyles = makeStyles(styles);
 
@@ -48,7 +47,6 @@ export default function NBAPage(props) {
       <div
         className={classes.pageHeader}
         style={{
-          backgroundImage: "url(" + image + ")",
           backgroundSize: "cover",
           backgroundPosition: "top center"
         }}
@@ -65,7 +63,7 @@ export default function NBAPage(props) {
             <GridItem align="left" xs={12} sm={12} md={12} lg={12} xl ={12}>
               <Card className={classes[cardAnimaton]}>
                 <form className={classes.form}>
-                  <CardHeader color="info" className={classes.cardHeader} >
+                  <CardHeader color={"success"} className={classes.cardHeader} >
                   <GridContainer justify="flex-start" align="left">
                       <GridItem xs={3}>
                         <StateSelect onChange={handleChange} ></StateSelect>

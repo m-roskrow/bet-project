@@ -133,6 +133,14 @@
             "logoLocation": "https://res.cloudinary.com/moneylineschecker/image/upload/v1612791933/brands/william-hill_tpezj2.png",
             "logoLarge": "https://www.williamhill.com/us/static/images/welcome/il/IL_WH_GVC_Logo.png",
             "siteNice": "William Hill US"
+        },
+        "foxbet": {
+            "include": true,
+            "states": ["CO", "PA", "NJ", "MI"],
+            "link": "https://www.foxbet.com/",
+            "logoLocation": "https://cdn.foxbet.com/images/landing/Logo.png",
+            "logoLarge": "https://cdn.foxbet.com/images/landing/Logo.png",
+            "siteNice": "Foxbet"
         }
     }
 }

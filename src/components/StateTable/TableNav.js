@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TableNav(props){
     const [currentSport] = React.useState(props.currentSport);
-    const classes = useStyles();
+    const classes = useStyles(styles);
     return(
 
         <div className={classes.root}>
