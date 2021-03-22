@@ -388,6 +388,7 @@ export default function TableCustom(props) {
   const [market, setMarket] = React.useState(props.market);
   const [filter, setFilter] = React.useState(props.filter);
   const [oddsFormat, setOddsFormat] = React.useState(props.oddsFormat);
+  
   /*update props on change */
   const updateProps = (newProps) => 
         {setMarket(newProps.market); 
@@ -400,8 +401,9 @@ export default function TableCustom(props) {
       updateProps(props),
       [props.state, props.data, props.market, props.filter]
     );
-  
+
   const rows = updateRows(data, market, state, filter, oddsFormat);
+  
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
