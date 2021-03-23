@@ -17,12 +17,25 @@ import InformationSection from "./Sections/Information/InformationSection.js";
 import FAQs from "./Sections/Information/FAQs.js";
 import Sports from "./Sections/Information/Sports.js";
 import styles from "assets/jss/material-kit-react/views/components.js";
+import { Info } from "@material-ui/icons";
 
 const useStyles = makeStyles(styles);
+
+function getRandomImage() {
+  //"assets/img/eggball1.jpg"
+  var jsonData = require("assets/img/page-assets/image-info.json");
+  var random = Math.floor(Math.random() * jsonData.images.length);
+  return {
+    "img": require ("assets/img/page-assets/" + jsonData.images[random].name), 
+    "credit": jsonData.images[random].credit, 
+    "link": jsonData.images[random].credit_link
+}
+}
 
 export default function Components(props) {
   const classes = useStyles();
   const { ...rest } = props;
+  const image = getRandomImage();
   return (
     <div>
       <Header
@@ -36,7 +49,7 @@ export default function Components(props) {
         }}
         {...rest}
       />
-      <Parallax image={require("assets/img/eggball1.jpg")}>
+      <Parallax image={image.img}>
         <div className={classes.container}>
           <GridContainer>
             <GridItem>
@@ -45,6 +58,8 @@ export default function Components(props) {
                 <h3 className={classes.subtitle}>
                   Ensuring you get the best odds available on your sports betting
                 </h3>
+                <br></br>
+               <p>{<a href={image.link}>Credit: {image.credit}</a>}</p>
               </div>
             </GridItem>
           </GridContainer>

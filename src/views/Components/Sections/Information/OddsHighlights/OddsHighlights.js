@@ -42,7 +42,7 @@ import example from "assets/img/profile.jpg"
                             <CardContent><Typography gutterBottom variant="body1" component="h2">
                                 hello
                                 </Typography>
-                                <Typography variant="body" color="textSecondary" component="p">
+                                <Typography variant="body1" color="textSecondary" component="p">
                                 there
                                 </Typography>
                             </CardContent>
