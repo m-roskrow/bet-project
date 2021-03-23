@@ -20,9 +20,37 @@ import example from "assets/img/profile.jpg"
     },
   });
 
+  function getData(sport, region, market, oddsFormat){
+      return new Promise(function (resolve, reject) {
+      let xhr = new XMLHttpRequest();
+      var url = "https://fxe3hhzmk9.execute-api.us-east-2.amazonaws.com/beta/odd";
+      xhr.open("POST", url);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onload = function () {
+        if (this.status >= 200 && this.status < 300) {
+            resolve(JSON.parse(JSON.parse(JSON.parse(xhr.responseText).body)));
+        } else {
+            reject({
+                status: this.status,
+                statusText: xhr.statusText
+            });
+        }
+      };
+      xhr.onerror = function () {
+          reject({
+              status: this.status,
+              statusText: xhr.statusText
+          });
+      };
+      var data2 = JSON.stringify({"sport": sport, "region": region, "market": market, "oddsFormat": oddsFormat});    
+      xhr.send(data2);
+      })
+  }
+
   export default function OddsHighlights(props) {
     const classes = useStyles();
     const [sport, setSport] = React.useState(props.sport);
+    const [data, setData] = React.useState({"success": false, "status": "Loading..."});
     const setProps = (props) => {
       setSport(props.sport);
     }
@@ -31,10 +59,11 @@ import example from "assets/img/profile.jpg"
       [props.sport]
     );
     
+    getData("basketball_nba", "us", "h2h", "american").then((value) => setData(value));
    
       
     return (
-
+                
                 <Card className={classes.root}>
                     <a href="something">
                         <CardActionArea title={sport}>
@@ -43,7 +72,7 @@ import example from "assets/img/profile.jpg"
                                 hello
                                 </Typography>
                                 <Typography variant="body1" color="textSecondary" component="p">
-                                there
+                                {sport}
                                 </Typography>
                             </CardContent>
                         </CardActionArea>

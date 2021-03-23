@@ -401,7 +401,9 @@ export default function TableCustom(props) {
       updateProps(props),
       [props.state, props.data, props.market, props.filter]
     );
-
+    if (!data.success) {
+      console.log(data);
+      return (<h2 >Error in fetching odds data, please contact mroskrow@moneylineschecker.com if the problem persists</h2>)}
   const rows = updateRows(data, market, state, filter, oddsFormat);
   
   return (
