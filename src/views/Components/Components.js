@@ -67,7 +67,7 @@ export default function Components(props) {
       </Parallax>
 
       <div className={classNames(classes.main, classes.mainRaised)}>
-        <Sports >  </Sports>
+        <Sports>  </Sports>
         <InformationSection></InformationSection>
         <FAQs></FAQs>
       </div>
