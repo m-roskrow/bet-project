@@ -2,26 +2,27 @@ import React from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // core components
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
 import GridItem from "components/Grid/GridItem";
-import GridContainer from "components/Grid/GridContainer";
-import example from "assets/img/profile.jpg"
+import {v4 as uuidv4} from 'uuid';
+import HighlightsCard from "./HighlightsCard.js";
 
   const useStyles = makeStyles({
     root: {
       maxWidth: window.innerWidth/3,
     },
     media: {
-      height: 150,
+      height: 600,
     },
+    rowC: {
+      display:"flex", flex_direction:"row"
+    }
   });
 
-  function getData(sport, region, market, oddsFormat){
+  function getData(sport, region, market, oddsFormat, updated){
       return new Promise(function (resolve, reject) {
+      if (updated){
+        reject({status: "Undeeded Update", statusText: "already updated"})
+      }
       let xhr = new XMLHttpRequest();
       var url = "https://fxe3hhzmk9.execute-api.us-east-2.amazonaws.com/beta/odd";
       xhr.open("POST", url);
@@ -47,10 +48,42 @@ import example from "assets/img/profile.jpg"
       })
   }
 
+  function genCards (sport, classes, operators) {
+    var data = require("./example.json")
+    if (!data.success) {
+      console.log(data);
+      
+      return (<p>Error fetching Odds data, please try refreshing. Contact mroskrow@moneylineschecker.com if the problem persists.</p>);
+    }
+    else if (data.data.length === 0) {
+      return (<p>No current {sport} games.</p>)
+    }
+    else {
+      var cards = [];
+      for (var i = 0; (i < data.data.length && i < 4); i++){
+        cards.push(genCard(data.data[i].sites, data.data[i].teams, sport, operators));
+      }
+      return cards
+    }
+  }
+
+  function genCard (sites, teams, sport, operators) {
+    var operators = require ("components/StateTable/operators.json");
+    if (sites.length === 0) return <p>Sorry, we have no supported odds data for {teams[0]} vs {teams[1]}</p>
+    else {
+      return(<HighlightsCard 
+        sites = {sites}
+        teams = {teams}
+        operators = {operators} 
+        sport = {sport} 
+        oddsFormat= {"american"} 
+        key={uuidv4()}></HighlightsCard>)
+    }
+  }
+
   export default function OddsHighlights(props) {
     const classes = useStyles();
     const [sport, setSport] = React.useState(props.sport);
-    const [data, setData] = React.useState({"success": false, "status": "Loading..."});
     const setProps = (props) => {
       setSport(props.sport);
     }
@@ -59,25 +92,9 @@ import example from "assets/img/profile.jpg"
       [props.sport]
     );
     
-    getData("basketball_nba", "us", "h2h", "american").then((value) => setData(value));
-   
-      
+    //getData("basketball_nba", "us", "h2h", "american", hasUpdated).then((value) => {setData(value); setUpdated(true)});
     return (
-                
-                <Card className={classes.root}>
-                    <a href="something">
-                        <CardActionArea title={sport}>
-                            <CardMedia className={classes.media} image={example} ></CardMedia>
-                            <CardContent><Typography gutterBottom variant="body1" component="h2">
-                                hello
-                                </Typography>
-                                <Typography variant="body1" color="textSecondary" component="p">
-                                {sport}
-                                </Typography>
-                            </CardContent>
-                        </CardActionArea>
-                    </a>
-                </Card>
+          <GridItem className={classes.rowC} >{genCards(sport, classes, require ("components/StateTable/operators.json"))}</GridItem>
               );
       }
       

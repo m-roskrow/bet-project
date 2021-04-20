@@ -24,7 +24,7 @@ export default function FAQs() {
             <h3>FAQs</h3>
           </div>
           <GridContainer>
-            <GridItem xs={12} sm={12} md={12} lg={6}>
+            <GridItem xs={12} sm={12} md={12} lg={12}>
               <NavPills
                 color="primary"
                 horizontal={{

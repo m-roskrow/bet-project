@@ -48,10 +48,11 @@ export default function Sports() {
       <div className={classes.container}>
         <div id="navigation-pills">
           <div className={classes.title}>
-            <Typography variant = "h2" align="center">Highlighted Odds</Typography>
+            <Typography variant = "h2" align="center">Upcoming Games</Typography>
+            <Typography variant = "body2" align="center">Click to see the best Moneyline odds for the next 4 games of your chosen sport. Games with Arbitrage possibilities are highlighted.</Typography>
           </div>
           <GridContainer justify="space-evenly" align="center">
-          <GridItem  >
+          <GridItem  xs={12}>
               <NavPills
                 color="primary"
                 tabs={[

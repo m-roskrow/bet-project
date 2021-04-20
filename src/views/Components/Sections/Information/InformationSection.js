@@ -17,7 +17,7 @@ export default function InformationSection() {
     <div className={classes.section}>
       <div className={classes.container}>
         <GridContainer justify="center">
-          <GridItem xs={12} sm={12} md={8}>
+          <GridItem xs={12} sm={12} md={12}>
             <h2>Our Mission:</h2>
             <h4>
               We are here to help. Our goal is to ensure that nobody betting on sports 
