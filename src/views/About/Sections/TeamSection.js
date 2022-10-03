@@ -38,11 +38,7 @@ export default function TeamSection() {
                 <img src={team2} alt="..." className={imageClasses} />
               </GridItem>
               <h4 className={classes.cardTitle}>
-                Michael Roskrow
-                <br />
-                <small className={classes.smallTitle}>Co-founder, CTO</small>
-                <br />
-                <small className={classes.smallTitle}>BSc in Computer Science, The University of Bath</small>
+                Coming soon...
               </h4>
               <CardBody>
                 <p className={classes.description}>
